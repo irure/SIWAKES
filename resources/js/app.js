@@ -1,18 +1,22 @@
+import './bootstrap'
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+//window.axios = require('axios');
 
-require('./bootstrap');
+//require('./bootstrap');
 
 window.Vue = require('vue');
 
 import Vue from 'vue'
 // ルーティングの定義をインポートする
 import router from './router'
+import store from './store'
 // ルートコンポーネントをインポートする
 import App from './App.vue'
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,6 +40,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const app = new Vue({
     el: '#app',
     router, // ルーティングの定義を読み込む
+    store,
     components: { App }, // ルートコンポーネントの使用を宣言する
     template: '<App />' // ルートコンポーネントを描画する
 });

@@ -1,16 +1,22 @@
 <?php
+
 namespace Tests\Feature;
 
 use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
+use Illuminate\Foundation\Testing\WithoutMiddleware;
 
 class RegisterApiTest extends TestCase
 {
+    use WithoutMiddleware; // use this trait
     use RefreshDatabase;
 
-
+    /**
+     * @test
+     */
     public function should_新しいユーザーを作成して返却する()
     {
         $data = [
@@ -30,19 +36,3 @@ class RegisterApiTest extends TestCase
             ->assertJson(['name' => $user->name]);
     }
 }
-
-//namespace Tests\Feature;
-
-//use Tests\TestCase;
-//use Illuminate\Foundation\Testing\WithFaker;
-//use Illuminate\Foundation\Testing\RefreshDatabase;
-
-//class RegisterApiTest extends TestCase
-//{
-//    public function testExample()
-//    {
-//        $response = $this->get('/');
-
-//        $response->assertStatus(200);
-//    }
-//}

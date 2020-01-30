@@ -6,6 +6,7 @@ use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\Request;
 
 class LoginApiTest extends TestCase
 {
@@ -19,7 +20,9 @@ class LoginApiTest extends TestCase
         $this->user = factory(User::class)->create();
     }
 
-
+    /**
+     * @test
+     */
     public function should_登録済みのユーザーを認証して返却する()
     {
         $response = $this->json('POST', route('login'), [
@@ -34,21 +37,3 @@ class LoginApiTest extends TestCase
         $this->assertAuthenticatedAs($this->user);
     }
 }
-
-
-
-//namespace Tests\Feature;
-
-//use Tests\TestCase;
-//use Illuminate\Foundation\Testing\WithFaker;
-//use Illuminate\Foundation\Testing\RefreshDatabase;
-
-//class LoginApiTest extends TestCase
-//{
-//    public function testExample()
-//    {
-//        $response = $this->get('/');
-
-//        $response->assertStatus(200);
-//    }
-//}
