@@ -95,7 +95,22 @@ const actions = {
 
     context.commit('setApiStatus', false)
     context.commit('error/setCode', response.status, { root: true })
-  }
+  },
+  //twitterログイン
+  async twlogin (context){
+    context.commit('setApiStatus', null)
+    const response = await axios.get('/api/twlogin')
+    const user = response.data || null
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      context.commit('setUser', user)
+      return false
+    }
+
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
 }
 
 export default {

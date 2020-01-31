@@ -11,6 +11,11 @@
         :class="{'tab__item--active': tab === 2 }"
         @click="tab = 2"
       >Register</li>
+      <li
+        class="tab__item"
+        :class="{'tab__item--active': tab === 3 }"
+        @click="tab = 3"
+      >Twitterでログイン</li>
     </ul>
     <div class="panel" v-show="tab === 1">
         <div class="panel" v-show="tab === 1">
@@ -33,6 +38,7 @@
             </form>
         </div>
     </div>
+    
     <div class="panel" v-show="tab === 2">
         <div class="panel" v-show="tab === 2">
             <form class="form" @submit.prevent="register">
@@ -61,6 +67,19 @@
             </form>
         </div>
     </div>
+    
+    <div class="panel" v-show="tab === 3">
+        <div class="panel" v-show="tab === 3">
+            <form class="form"  @submit.prevent="twlogin">
+                <div>
+                    <button class="btn btn-block btn-social btn-twitter">
+                        <span class="fa fa-twitter"></span><div style="font-size:22px">Sign in With Twitter</div>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
 </div>
 </template>
 
@@ -104,7 +123,17 @@ export default {
                 // トップページに移動する
                 this.$router.push('/')
             }
-        },clearError () {
+        },async twlogin(){
+            //authストアのtwloginアクションを呼び出す
+            
+            //await this.$store.dispatch('auth/twlogin')
+            
+            if (this.apiStatus) {
+                // トップページに移動する
+                this.$router.push('/oauth/twitter')
+            }
+        }
+        ,clearError () {
             this.$store.commit('auth/setLoginErrorMessages', null)
             this.$store.commit('auth/setRegisterErrorMessages', null)
         }
