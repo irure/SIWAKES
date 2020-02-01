@@ -1,4 +1,6 @@
 import { OK, CREATED, UNPROCESSABLE_ENTITY } from '../util'
+const inBrowser = typeof window !== 'undefined'
+import Cookies from 'js-cookie';
 
 const state = {
   user: null,
@@ -24,6 +26,18 @@ const mutations = {
   },
   setRegisterErrorMessages (state, messages) {
     state.registerErrorMessages = messages
+  },
+  setToken (state,  token ) {
+    state.token = token
+    
+    // Store token in cookies
+    if (inBrowser) {
+      if (token) {
+        Cookies.set('token', token, { expires: 30 })
+      } else {
+        Cookies.remove('token')
+      }
+    }
   }
 }
 
@@ -97,19 +111,23 @@ const actions = {
     context.commit('error/setCode', response.status, { root: true })
   },
   //twitterログイン
-  async twlogin (context){
+  async twlogin (context, callbackData){
     context.commit('setApiStatus', null)
-    const response = await axios.get('/oauth/twitter/callback', { params: this.$route })
-    const user = response.data || null
     
-    if (response.status === OK) {
+    const token = callbackData.config.params || null
+    
+    
+    if (callbackData.status === 200) {
       context.commit('setApiStatus', true)
-      context.commit('setUser', user)
+      context.commit('setToken', token)
+      
       return false
     }
 
     context.commit('setApiStatus', false)
-    context.commit('error/setCode', response.status, { root: true })
+    context.commit('error/setCode', callbackData.status, { root: true })
+  },async twset(context,$data){
+    console.log($data)
   },
 }
 

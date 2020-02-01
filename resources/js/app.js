@@ -17,6 +17,8 @@ import store from './store'
 // ルートコンポーネントをインポートする
 import App from './App.vue'
 
+const axios = require('axios');
+Vue.prototype.$http = axios;
 
 /**
  * The following block of code may be used to automatically register your

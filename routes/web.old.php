@@ -13,7 +13,7 @@
 Route::get('/oauth/twitter', function(){
     return Socialite::driver('twitter')->redirect();
 });
-Route::get('/oauth/twitter/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('/oauth/twitter/twcallback', 'Auth\RegisterController@twcallback')->name('twcallback');
 
 Route::get('/{any?}', function () {
     return view('index');

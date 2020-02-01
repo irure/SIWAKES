@@ -6,8 +6,8 @@
     <div class="navbar__menu">
       <div v-if="isLogin" class="navbar__item">
         <button class="button">
-          <i class="icon ion-md-add"></i>
-          Submit a photo
+          <i class="icon"></i>
+          1回目
         </button>
       </div>
       <span v-if="isLogin" class="navbar__item">
