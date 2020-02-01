@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/oauth/twitter', function(){
+    return Socialite::driver('twitter')->redirect();
+});
 
 Route::get('/{any?}', function () {
     return view('index');
