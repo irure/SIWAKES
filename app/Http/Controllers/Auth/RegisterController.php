@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
-use Socialite;
-use App\SocialAccount;
 
 class RegisterController extends Controller
 {
@@ -76,41 +74,5 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         return $user;
-    }
-    
-    public function twlogin()
-    {
-        return Socialite::with('Twitter')->redirect();
-    }
-
-    public function twcallback()
-    {
-        $twitterUser = Socialite::driver('twitter')->user();
-        
-        $socialAccount = SocialAccount::firstOrNew([
-            'provider'   => 'twitter',
-            'account_id' => $twitterUser->getId(),
-        ]);
-        
-        if ($socialAccount->exists) {
-            $user = User::find($socialAccount->getAttribute('user_id'));
-        } else {
-            $user = User::create([
-                'name'         => $twitterUser->getName(),
-                'email'        => $twitterUser->getEmail(),
-                'password'     => null,
-                'twitter_id'   => $twitterUser->getNickName(),
-                'account_id' => $twitterUser->getId(),
-            ]);
-        $socialAccount->setAttribute('user_id', $createdUser->id);
-        $socialAccount->save();
-        }
-        
-        return [
-            'user'         => $user,
-            'access_token' => $user->createToken(null, ['*'])->accessToken,
-        ];
-        
-        
     }
 }

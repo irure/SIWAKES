@@ -2160,19 +2160,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {
-      tab: 1,
-      loginForm: {
-        email: '',
-        password: ''
-      },
-      registerForm: {
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: ''
-      }
-    };
+    return {};
   },
   computed: {
     apiStatus: function apiStatus() {
@@ -2231,7 +2219,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _api_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../api.js */ "./resources/js/api.js");
 //
 //
 //
@@ -2254,152 +2241,61 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      active_todo: null,
-      todo_form: "",
-      todos: []
+      active_task: null,
+      tasks: [],
+      taskForm: {
+        task: ''
+      }
     };
   },
   methods: {
-    addTodo: function addTodo() {
+    addTask: function addTask() {
       var _this = this;
 
-      var data = {
-        todo: this.todo_form
-      };
-      data._token = document.getElementsByName('csrf-token')[0].content;
-      _api_js__WEBPACK_IMPORTED_MODULE_1__["default"].postTodo(JSON.stringify(data)).then(function () {
-        _this.getTodoList();
+      if (this.taskForm.task) this.$store.dispatch('auth/postTask', this.taskForm).then(function () {
+        _this.getTaskList();
       });
     },
-    deleteTodo: function deleteTodo(id) {
+    getTaskList: function getTaskList() {
       var _this2 = this;
 
-      var data = {};
-      data._token = document.getElementsByName('csrf-token')[0].content;
-      _api_js__WEBPACK_IMPORTED_MODULE_1__["default"].deleteTodo(id, JSON.stringify(data)).then(function () {
-        _this2.getTodoList();
+      this.$store.dispatch('auth/getTask').then(function (result) {
+        _this2.tasks = result;
       });
     },
-    updateTodo: function updateTodo(id) {
+    deleteTask: function deleteTask(id) {
       var _this3 = this;
 
-      var data = {
-        todo: this.todos.filter(function (v) {
-          return v.id === id;
-        })[0].todo
-      };
-      data._token = document.getElementsByName('csrf-token')[0].content;
-      _api_js__WEBPACK_IMPORTED_MODULE_1__["default"].updateTodo(id, JSON.stringify(data)).then(function () {
-        _this3.getTodoList();
+      this.$store.dispatch('auth/deleteTask', id).then(function () {
+        _this3.getTaskList();
       });
     },
-    getTodoList: function getTodoList() {
+    updateTask: function updateTask(id) {
       var _this4 = this;
 
-      _api_js__WEBPACK_IMPORTED_MODULE_1__["default"].getTodoList().then(function (result) {
-        _this4.todos = result;
+      //let data = {task:this.tasks.filter((v)=>{return v.id === id})[0].task}
+      //data._token = document.getElementsByName('csrf-token')[0].content;
+      //api.updateTask(id,JSON.stringify(data)).then(()=>{
+      var data = {
+        task: this.tasks.filter(function (v) {
+          return v.id === id;
+        })[0].task
+      };
+      this.$store.dispatch('auth/updateTask', {
+        id: id,
+        task: data.task
+      }).then(function () {
+        _this4.getTaskList();
       });
     }
   },
   mounted: function mounted() {
-    this.getTodoList();
+    this.getTaskList();
     console.log('Component mounted.');
   }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/oauth/twitter/Callback.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/oauth/twitter/Callback.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
-/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-
-
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
-
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  middleware: 'guest',
-  data: function data() {
-    return {
-      failedMessage: null
-    };
-  },
-  computed: {
-    attempting: function attempting() {
-      return !this.failedMessage;
-    }
-  },
-  methods: Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapMutations"])(['setToken', 'setUser']),
-  mounted: function () {
-    var _mounted = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var callbackData;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              _context.prev = 0;
-              _context.next = 3;
-              return this.$http.get('oauth/twitter/callback', {
-                params: this.$route.query
-              });
-
-            case 3:
-              callbackData = _context.sent;
-              _context.next = 6;
-              return this.$store.dispatch('auth/twlogin', callbackData);
-
-            case 6:
-              this.$router.replace('/oauth/twitter/twcallback');
-              _context.next = 12;
-              break;
-
-            case 9:
-              _context.prev = 9;
-              _context.t0 = _context["catch"](0);
-              this.failedMessage = _context.t0.message;
-
-            case 12:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee, this, [[0, 9]]);
-    }));
-
-    function mounted() {
-      return _mounted.apply(this, arguments);
-    }
-
-    return mounted;
-  }()
 });
 
 /***/ }),
@@ -21202,19 +21098,19 @@ var render = function() {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.todo_form,
-                    expression: "todo_form"
+                    value: _vm.taskForm.task,
+                    expression: "taskForm.task"
                   }
                 ],
                 staticClass: "form-control",
-                attrs: { type: "text", id: "inputtodo" },
-                domProps: { value: _vm.todo_form },
+                attrs: { type: "text", id: "inputtask" },
+                domProps: { value: _vm.taskForm.task },
                 on: {
                   input: function($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.todo_form = $event.target.value
+                    _vm.$set(_vm.taskForm, "task", $event.target.value)
                   }
                 }
               }),
@@ -21224,16 +21120,38 @@ var render = function() {
                 {
                   staticClass: "btn btn-primary",
                   attrs: { type: "button" },
-                  on: { click: _vm.addTodo }
+                  on: { click: _vm.addTask }
                 },
                 [_vm._v("Add")]
               )
             ])
           ]),
           _vm._v(" "),
-          _vm._l(_vm.todos, function(todo) {
+          _vm._l(_vm.tasks, function(task) {
             return _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-header" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: task.task,
+                      expression: "task.task"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text", id: "task" },
+                  domProps: { value: task.task },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(task, "task", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
                 _c(
                   "button",
                   {
@@ -21241,7 +21159,7 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.deleteTodo(todo.id)
+                        return _vm.deleteTask(task.id)
                       }
                     }
                   },
@@ -21255,34 +21173,12 @@ var render = function() {
                     attrs: { type: "button" },
                     on: {
                       click: function($event) {
-                        return _vm.updateTodo(todo.id)
+                        return _vm.updateTask(task.id)
                       }
                     }
                   },
                   [_vm._v("Update")]
-                ),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: todo.todo,
-                      expression: "todo.todo"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", id: "todo" },
-                  domProps: { value: todo.todo },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(todo, "todo", $event.target.value)
-                    }
-                  }
-                })
+                )
               ])
             ])
           })
@@ -21315,42 +21211,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("p", [_vm._v("システムエラーが発生しました。")])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/oauth/twitter/Callback.vue?vue&type=template&id=4d883122&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/oauth/twitter/Callback.vue?vue&type=template&id=4d883122& ***!
-  \********************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _vm.attempting
-        ? _c("p", [_vm._v("Twitterでログインしています。")])
-        : [
-            _c("p", [_vm._v("Twitterでのログインに失敗しました。")]),
-            _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(_vm.failedMessage))])
-          ]
-    ],
-    2
-  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -37606,61 +37466,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/api.js":
-/*!*****************************!*\
-  !*** ./resources/js/api.js ***!
-  \*****************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-
-
-var send = function send(method, uri) {
-  var data = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-  var url = 'http://127.0.0.1:8000' + uri;
-  return new Promise(function (resolve) {
-    var xhr = new XMLHttpRequest();
-    xhr.open(method, url);
-    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
-
-    xhr.onload = function () {
-      try {
-        var res_json = JSON.parse(xhr.responseText);
-        resolve(res_json);
-      } catch (e) {
-        resolve(xhr.responseText);
-      }
-    };
-
-    xhr.onerror = function () {
-      console.log(xhr.status);
-      console.log("error!");
-    };
-
-    xhr.send(data);
-  });
-};
-
-var api = {
-  getTodoList: function getTodoList() {
-    return send("GET", "/api/task");
-  },
-  postTask: function postTask(task) {
-    return send("POST", "/api/task", task);
-  },
-  updateTask: function updateTask(id, task) {
-    return send("PUT", "/api/task/" + id, task);
-  },
-  deleteTask: function deleteTask(id, data) {
-    return send("DELETE", "/api/todo/" + id, data);
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (api);
-
-/***/ }),
-
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -38227,75 +38032,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/pages/oauth/twitter/Callback.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/pages/oauth/twitter/Callback.vue ***!
-  \*******************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Callback_vue_vue_type_template_id_4d883122___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Callback.vue?vue&type=template&id=4d883122& */ "./resources/js/pages/oauth/twitter/Callback.vue?vue&type=template&id=4d883122&");
-/* harmony import */ var _Callback_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Callback.vue?vue&type=script&lang=js& */ "./resources/js/pages/oauth/twitter/Callback.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Callback_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Callback_vue_vue_type_template_id_4d883122___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Callback_vue_vue_type_template_id_4d883122___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/pages/oauth/twitter/Callback.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/pages/oauth/twitter/Callback.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/pages/oauth/twitter/Callback.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Callback_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Callback.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/oauth/twitter/Callback.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Callback_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/pages/oauth/twitter/Callback.vue?vue&type=template&id=4d883122&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/pages/oauth/twitter/Callback.vue?vue&type=template&id=4d883122& ***!
-  \**************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Callback_vue_vue_type_template_id_4d883122___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./Callback.vue?vue&type=template&id=4d883122& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/oauth/twitter/Callback.vue?vue&type=template&id=4d883122&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Callback_vue_vue_type_template_id_4d883122___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Callback_vue_vue_type_template_id_4d883122___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
 /***/ "./resources/js/pages/oauth/twitter/Redirect.vue":
 /*!*******************************************************!*\
   !*** ./resources/js/pages/oauth/twitter/Redirect.vue ***!
@@ -38381,11 +38117,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_Login_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Login.vue */ "./resources/js/pages/Login.vue");
 /* harmony import */ var _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/errors/System.vue */ "./resources/js/pages/errors/System.vue");
 /* harmony import */ var _pages_oauth_twitter_Redirect_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/oauth/twitter/Redirect.vue */ "./resources/js/pages/oauth/twitter/Redirect.vue");
-/* harmony import */ var _pages_oauth_twitter_Callback_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/oauth/twitter/Callback.vue */ "./resources/js/pages/oauth/twitter/Callback.vue");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 
  // ページコンポーネントをインポートする
-
 
 
 
@@ -38403,7 +38137,7 @@ var routes = [{
   path: '/login',
   component: _pages_Login_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
-    if (_store__WEBPACK_IMPORTED_MODULE_7__["default"].getters['auth/check']) {
+    if (_store__WEBPACK_IMPORTED_MODULE_6__["default"].getters['auth/check']) {
       next('/');
     } else {
       next();
@@ -38415,9 +38149,6 @@ var routes = [{
 }, {
   path: '/oauth/twitter',
   component: _pages_oauth_twitter_Redirect_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
-}, {
-  path: '/oauth/twitter/Callback',
-  component: _pages_oauth_twitter_Callback_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
 }]; // VueRouterインスタンスを作成する
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -38495,9 +38226,9 @@ var mutations = {
   }
 };
 var actions = {
-  // 会員登録
-  register: function () {
-    var _register = _asyncToGenerator(
+  // ログイン
+  login: function () {
+    var _login = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee(context, $data) {
       var response;
@@ -38507,12 +38238,12 @@ var actions = {
             case 0:
               context.commit('setApiStatus', null);
               _context.next = 3;
-              return axios.post('/api/register', $data);
+              return axios.post('/api/login', $data);
 
             case 3:
               response = _context.sent;
 
-              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["CREATED"])) {
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
                 _context.next = 8;
                 break;
               }
@@ -38520,57 +38251,6 @@ var actions = {
               context.commit('setApiStatus', true);
               context.commit('setUser', response.data);
               return _context.abrupt("return", false);
-
-            case 8:
-              context.commit('setApiStatus', false);
-
-              if (response.status === _util__WEBPACK_IMPORTED_MODULE_1__["UNPROCESSABLE_ENTITY"]) {
-                context.commit('setRegisterErrorMessages', response.data.errors);
-              } else {
-                context.commit('error/setCode', response.status, {
-                  root: true
-                });
-              }
-
-            case 10:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    function register(_x, _x2) {
-      return _register.apply(this, arguments);
-    }
-
-    return register;
-  }(),
-  // ログイン
-  login: function () {
-    var _login = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(context, $data) {
-      var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              context.commit('setApiStatus', null);
-              _context2.next = 3;
-              return axios.post('/api/login', $data);
-
-            case 3:
-              response = _context2.sent;
-
-              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context2.next = 8;
-                break;
-              }
-
-              context.commit('setApiStatus', true);
-              context.commit('setUser', response.data);
-              return _context2.abrupt("return", false);
 
             case 8:
               context.commit('setApiStatus', false);
@@ -38585,13 +38265,13 @@ var actions = {
 
             case 10:
             case "end":
-              return _context2.stop();
+              return _context.stop();
           }
         }
-      }, _callee2);
+      }, _callee);
     }));
 
-    function login(_x3, _x4) {
+    function login(_x, _x2) {
       return _login.apply(this, arguments);
     }
 
@@ -38601,27 +38281,27 @@ var actions = {
   logout: function () {
     var _logout = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(context) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2(context) {
       var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context2.prev = _context2.next) {
             case 0:
               context.commit('setApiStatus', null);
-              _context3.next = 3;
+              _context2.next = 3;
               return axios.post('/api/logout');
 
             case 3:
-              response = _context3.sent;
+              response = _context2.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context3.next = 8;
+                _context2.next = 8;
                 break;
               }
 
               context.commit('setApiStatus', true);
               context.commit('setUser', null);
-              return _context3.abrupt("return", false);
+              return _context2.abrupt("return", false);
 
             case 8:
               context.commit('setApiStatus', false);
@@ -38631,13 +38311,13 @@ var actions = {
 
             case 10:
             case "end":
-              return _context3.stop();
+              return _context2.stop();
           }
         }
-      }, _callee3);
+      }, _callee2);
     }));
 
-    function logout(_x5) {
+    function logout(_x3) {
       return _logout.apply(this, arguments);
     }
 
@@ -38647,36 +38327,80 @@ var actions = {
   currentUser: function () {
     var _currentUser = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(context) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(context) {
       var response, user;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              _context3.next = 3;
+              return axios.get('/api/user');
+
+            case 3:
+              response = _context3.sent;
+              user = response.data || null;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context3.next = 9;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              context.commit('setUser', user);
+              return _context3.abrupt("return", false);
+
+            case 9:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              }); //タスクをデータベースに保存
+
+            case 11:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }));
+
+    function currentUser(_x4) {
+      return _currentUser.apply(this, arguments);
+    }
+
+    return currentUser;
+  }(),
+  postTask: function () {
+    var _postTask = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(context, $data) {
+      var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
             case 0:
               context.commit('setApiStatus', null);
               _context4.next = 3;
-              return axios.get('/api/user');
+              return axios.post('/api/task', $data);
 
             case 3:
               response = _context4.sent;
-              user = response.data || null;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context4.next = 9;
+                _context4.next = 7;
                 break;
               }
 
               context.commit('setApiStatus', true);
-              context.commit('setUser', user);
               return _context4.abrupt("return", false);
 
-            case 9:
+            case 7:
               context.commit('setApiStatus', false);
               context.commit('error/setCode', response.status, {
                 root: true
-              });
+              }); //タスク一覧をデータベースから取得
 
-            case 11:
+            case 9:
             case "end":
               return _context4.stop();
           }
@@ -38684,41 +38408,43 @@ var actions = {
       }, _callee4);
     }));
 
-    function currentUser(_x6) {
-      return _currentUser.apply(this, arguments);
+    function postTask(_x5, _x6) {
+      return _postTask.apply(this, arguments);
     }
 
-    return currentUser;
+    return postTask;
   }(),
-  //twitterログイン
-  twlogin: function () {
-    var _twlogin = _asyncToGenerator(
+  getTask: function () {
+    var _getTask = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(context, callbackData) {
-      var token;
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(context) {
+      var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
         while (1) {
           switch (_context5.prev = _context5.next) {
             case 0:
               context.commit('setApiStatus', null);
-              token = callbackData.config.params || null;
+              _context5.next = 3;
+              return axios.get('/api/task');
 
-              if (!(callbackData.status === 200)) {
-                _context5.next = 6;
+            case 3:
+              response = _context5.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context5.next = 7;
                 break;
               }
 
               context.commit('setApiStatus', true);
-              context.commit('setToken', token);
-              return _context5.abrupt("return", false);
+              return _context5.abrupt("return", response.data);
 
-            case 6:
+            case 7:
               context.commit('setApiStatus', false);
-              context.commit('error/setCode', callbackData.status, {
+              context.commit('error/setCode', response.status, {
                 root: true
-              });
+              }); //タスクを削除
 
-            case 8:
+            case 9:
             case "end":
               return _context5.stop();
           }
@@ -38726,23 +38452,43 @@ var actions = {
       }, _callee5);
     }));
 
-    function twlogin(_x7, _x8) {
-      return _twlogin.apply(this, arguments);
+    function getTask(_x7) {
+      return _getTask.apply(this, arguments);
     }
 
-    return twlogin;
+    return getTask;
   }(),
-  twset: function () {
-    var _twset = _asyncToGenerator(
+  deleteTask: function () {
+    var _deleteTask = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(context, $data) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6(context, id) {
+      var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
         while (1) {
           switch (_context6.prev = _context6.next) {
             case 0:
-              console.log($data);
+              context.commit('setApiStatus', null);
+              _context6.next = 3;
+              return axios["delete"]('/api/task/' + id);
 
-            case 1:
+            case 3:
+              response = _context6.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context6.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context6.abrupt("return", response.data);
+
+            case 7:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              }); //タスクを更新
+
+            case 9:
             case "end":
               return _context6.stop();
           }
@@ -38750,11 +38496,56 @@ var actions = {
       }, _callee6);
     }));
 
-    function twset(_x9, _x10) {
-      return _twset.apply(this, arguments);
+    function deleteTask(_x8, _x9) {
+      return _deleteTask.apply(this, arguments);
     }
 
-    return twset;
+    return deleteTask;
+  }(),
+  updateTask: function () {
+    var _updateTask = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7(context, data) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
+        while (1) {
+          switch (_context7.prev = _context7.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              console.log(data);
+              _context7.next = 4;
+              return axios.put('/api/task/' + data.id + '/' + data.task);
+
+            case 4:
+              response = _context7.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context7.next = 8;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context7.abrupt("return", response.data);
+
+            case 8:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 10:
+            case "end":
+              return _context7.stop();
+          }
+        }
+      }, _callee7);
+    }));
+
+    function updateTask(_x10, _x11) {
+      return _updateTask.apply(this, arguments);
+    }
+
+    return updateTask;
   }()
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

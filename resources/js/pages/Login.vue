@@ -19,16 +19,6 @@
 export default {
     data () {
         return {
-            tab: 1,
-            loginForm: {
-                email: '',
-                password: ''
-            },registerForm: {
-                name: '',
-                email: '',
-                password: '',
-                password_confirmation: ''
-            }
         }
     } ,computed: {
         apiStatus () {

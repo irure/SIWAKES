@@ -42,25 +42,6 @@ const mutations = {
 }
 
 const actions = {
-  // 会員登録
-  async register (context, $data) {
-    context.commit('setApiStatus', null)
-    const response = await axios.post('/api/register', $data)
-
-    if (response.status === CREATED) {
-      context.commit('setApiStatus', true)
-      context.commit('setUser', response.data)
-      return false
-    }
-
-    context.commit('setApiStatus', false)
-    if (response.status === UNPROCESSABLE_ENTITY) {
-      context.commit('setRegisterErrorMessages', response.data.errors)
-    } else {
-      context.commit('error/setCode', response.status, { root: true })
-    }
-  },
-
   // ログイン
   async login (context, $data) {
     context.commit('setApiStatus', null)
@@ -109,26 +90,61 @@ const actions = {
 
     context.commit('setApiStatus', false)
     context.commit('error/setCode', response.status, { root: true })
-  },
-  //twitterログイン
-  async twlogin (context, callbackData){
+    
+    //タスクをデータベースに保存
+  },async postTask(context,$data){
     context.commit('setApiStatus', null)
+    const response = await axios.post('/api/task',$data);
     
-    const token = callbackData.config.params || null
-    
-    
-    if (callbackData.status === 200) {
+    if (response.status === OK) {
       context.commit('setApiStatus', true)
-      context.commit('setToken', token)
-      
       return false
     }
 
     context.commit('setApiStatus', false)
-    context.commit('error/setCode', callbackData.status, { root: true })
-  },async twset(context,$data){
-    console.log($data)
+    context.commit('error/setCode', response.status, { root: true })
+    
+    //タスク一覧をデータベースから取得
+  },async getTask(context){
+    context.commit('setApiStatus', null)
+    const response = await axios.get('/api/task')
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+    
+    //タスクを削除
+  },async deleteTask(context,id){
+    context.commit('setApiStatus', null)
+    const response = await axios.delete('/api/task/'+id)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+    
+    //タスクを更新
+  },async updateTask(context,data){
+    context.commit('setApiStatus', null)
+    console.log(data)
+    const response = await axios.put('/api/task/'+data.id+'/'+data.task)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
   },
+  
 }
 
 export default {

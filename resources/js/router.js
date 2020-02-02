@@ -6,7 +6,6 @@ import Tasks from './pages/Tasks.vue'
 import Login from './pages/Login.vue'
 import SystemError from './pages/errors/System.vue'
 import Redirect from './pages/oauth/twitter/Redirect.vue'
-import Callback from './pages/oauth/twitter/Callback.vue'
 
 import store from './store'
 
@@ -36,10 +35,7 @@ const routes = [
   },{
     path: '/oauth/twitter',
     component: Redirect
-  },{
-    path: '/oauth/twitter/Callback',
-    component: Callback
-  },
+  }
   
 ]
 
