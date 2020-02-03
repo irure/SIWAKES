@@ -2241,6 +2241,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2248,7 +2262,9 @@ __webpack_require__.r(__webpack_exports__);
       tasks: [],
       taskForm: {
         task: ''
-      }
+      },
+      times: [1, 2, 3, 4, 5, 6, 7],
+      charges: ['a', 'b']
     };
   },
   methods: {
@@ -2257,6 +2273,8 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.taskForm.task) this.$store.dispatch('auth/postTask', this.taskForm).then(function () {
         _this.getTaskList();
+
+        _this.taskForm.task = '';
       });
     },
     getTaskList: function getTaskList() {
@@ -2276,9 +2294,6 @@ __webpack_require__.r(__webpack_exports__);
     updateTask: function updateTask(id) {
       var _this4 = this;
 
-      //let data = {task:this.tasks.filter((v)=>{return v.id === id})[0].task}
-      //data._token = document.getElementsByName('csrf-token')[0].content;
-      //api.updateTask(id,JSON.stringify(data)).then(()=>{
       var data = {
         task: this.tasks.filter(function (v) {
           return v.id === id;
@@ -2289,6 +2304,51 @@ __webpack_require__.r(__webpack_exports__);
         task: data.task
       }).then(function () {
         _this4.getTaskList();
+      });
+    },
+    updateHowlong: function updateHowlong(id) {
+      var _this5 = this;
+
+      var data = {
+        howlong: this.tasks.filter(function (v) {
+          return v.id === id;
+        })[0].howlong
+      };
+      this.$store.dispatch('auth/updateHowlong', {
+        id: id,
+        howlong: data.howlong
+      }).then(function () {
+        _this5.getTaskList();
+      });
+    },
+    updateHowtimes: function updateHowtimes(id) {
+      var _this6 = this;
+
+      var data = {
+        howtimes: this.tasks.filter(function (v) {
+          return v.id === id;
+        })[0].howtimes
+      };
+      this.$store.dispatch('auth/updateHowtimes', {
+        id: id,
+        howtimes: data.howtimes
+      }).then(function () {
+        _this6.getTaskList();
+      });
+    },
+    updateCharge: function updateCharge(id) {
+      var _this7 = this;
+
+      var data = {
+        charge: this.tasks.filter(function (v) {
+          return v.id === id;
+        })[0].charge
+      };
+      this.$store.dispatch('auth/updateCharge', {
+        id: id,
+        charge: data.charge
+      }).then(function () {
+        _this7.getTaskList();
       });
     }
   },
@@ -21091,41 +21151,7 @@ var render = function() {
         "div",
         { staticClass: "col-md-8" },
         [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.taskForm.task,
-                    expression: "taskForm.task"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", id: "inputtask" },
-                domProps: { value: _vm.taskForm.task },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.taskForm, "task", $event.target.value)
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary",
-                  attrs: { type: "button" },
-                  on: { click: _vm.addTask }
-                },
-                [_vm._v("Add")]
-              )
-            ])
-          ]),
+          _vm._m(0),
           _vm._v(" "),
           _vm._l(_vm.tasks, function(task) {
             return _c("div", { staticClass: "card" }, [
@@ -21143,6 +21169,9 @@ var render = function() {
                   attrs: { type: "text", id: "task" },
                   domProps: { value: task.task },
                   on: {
+                    blur: function($event) {
+                      return _vm.updateTask(task.id)
+                    },
                     input: function($event) {
                       if ($event.target.composing) {
                         return
@@ -21151,6 +21180,125 @@ var render = function() {
                     }
                   }
                 }),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: task.howlong,
+                      expression: "task.howlong"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "howlong", id: "howlong" },
+                  domProps: { value: task.howlong },
+                  on: {
+                    blur: function($event) {
+                      return _vm.updateHowlong(task.id)
+                    },
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(task, "howlong", $event.target.value)
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: task.howtimes,
+                        expression: "task.howtimes"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      blur: function($event) {
+                        return _vm.updateHowtimes(task.id)
+                      },
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          task,
+                          "howtimes",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  _vm._l(_vm.times, function(time) {
+                    return _c("option", [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(time) +
+                          "\n                        "
+                      )
+                    ])
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: task.charge,
+                        expression: "task.charge"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      blur: function($event) {
+                        return _vm.updateCharge(task.id)
+                      },
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          task,
+                          "charge",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  _vm._l(_vm.charges, function(charge) {
+                    return _c("option", [
+                      _vm._v(
+                        "\n                            " +
+                          _vm._s(charge) +
+                          "\n                        "
+                      )
+                    ])
+                  }),
+                  0
+                ),
                 _vm._v(" "),
                 _c(
                   "button",
@@ -21164,31 +21312,69 @@ var render = function() {
                     }
                   },
                   [_vm._v("Delete")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-info",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.updateTask(task.id)
-                      }
-                    }
-                  },
-                  [_vm._v("Update")]
                 )
               ])
             ])
-          })
+          }),
+          _vm._v(" "),
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "form-group" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.taskForm.task,
+                    expression: "taskForm.task"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text", id: "inputtask" },
+                domProps: { value: _vm.taskForm.task },
+                on: {
+                  blur: _vm.addTask,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.taskForm, "task", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ])
         ],
         2
       )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c(
+        "button",
+        { staticClass: "btn btn-danger", attrs: { type: "button" } },
+        [_vm._v("タスク一覧")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-danger", attrs: { type: "button" } },
+        [_vm._v("グラフ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-danger", attrs: { type: "button" } },
+        [_vm._v("担当者変更")]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -37509,6 +37695,11 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 var axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 
 vue__WEBPACK_IMPORTED_MODULE_2___default.a.prototype.$http = axios;
+vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(window.vuelidate["default"]);
+var _window$validators = window.validators,
+    required = _window$validators.required,
+    email = _window$validators.email,
+    integer = _window$validators.integer;
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -37549,8 +37740,17 @@ function () {
                 App: _App_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
               },
               // ルートコンポーネントの使用を宣言する
-              template: '<App />' // ルートコンポーネントを描画する
-
+              template: '<App />',
+              // ルートコンポーネントを描画する
+              data: {
+                title: '入力フォームバリデーション',
+                text: ''
+              },
+              validations: {
+                text: {
+                  required: required
+                }
+              }
             });
 
           case 3:
@@ -38514,7 +38714,7 @@ var actions = {
               context.commit('setApiStatus', null);
               console.log(data);
               _context7.next = 4;
-              return axios.put('/api/task/' + data.id + '/' + data.task);
+              return axios.put('/api/task/' + data.id + '/task/' + data.task);
 
             case 4:
               response = _context7.sent;
@@ -38531,7 +38731,7 @@ var actions = {
               context.commit('setApiStatus', false);
               context.commit('error/setCode', response.status, {
                 root: true
-              });
+              }); //時間を更新
 
             case 10:
             case "end":
@@ -38546,6 +38746,143 @@ var actions = {
     }
 
     return updateTask;
+  }(),
+  updateHowlong: function () {
+    var _updateHowlong = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(context, data) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
+        while (1) {
+          switch (_context8.prev = _context8.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              console.log(data);
+              _context8.next = 4;
+              return axios.put('/api/task/' + data.id + '/howlong/' + data.howlong);
+
+            case 4:
+              response = _context8.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context8.next = 8;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context8.abrupt("return", response.data);
+
+            case 8:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 10:
+            case "end":
+              return _context8.stop();
+          }
+        }
+      }, _callee8);
+    }));
+
+    function updateHowlong(_x12, _x13) {
+      return _updateHowlong.apply(this, arguments);
+    }
+
+    return updateHowlong;
+  }(),
+  //回数を更新
+  updateHowtimes: function () {
+    var _updateHowtimes = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee9(context, data) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee9$(_context9) {
+        while (1) {
+          switch (_context9.prev = _context9.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              console.log(data);
+              _context9.next = 4;
+              return axios.put('/api/task/' + data.id + '/howtimes/' + data.howtimes);
+
+            case 4:
+              response = _context9.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context9.next = 8;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context9.abrupt("return", response.data);
+
+            case 8:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 10:
+            case "end":
+              return _context9.stop();
+          }
+        }
+      }, _callee9);
+    }));
+
+    function updateHowtimes(_x14, _x15) {
+      return _updateHowtimes.apply(this, arguments);
+    }
+
+    return updateHowtimes;
+  }(),
+  //担当を更新
+  updateCharge: function () {
+    var _updateCharge = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10(context, data) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
+        while (1) {
+          switch (_context10.prev = _context10.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              console.log(data);
+              _context10.next = 4;
+              return axios.put('/api/task/' + data.id + '/charge/' + data.charge);
+
+            case 4:
+              response = _context10.sent;
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context10.next = 8;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context10.abrupt("return", response.data);
+
+            case 8:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 10:
+            case "end":
+              return _context10.stop();
+          }
+        }
+      }, _callee10);
+    }));
+
+    function updateCharge(_x16, _x17) {
+      return _updateCharge.apply(this, arguments);
+    }
+
+    return updateCharge;
   }()
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

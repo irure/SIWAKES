@@ -19,6 +19,8 @@ import App from './App.vue'
 
 const axios = require('axios');
 Vue.prototype.$http = axios;
+Vue.use(window.vuelidate.default);
+const {required,email,integer} = window.validators;
 
 /**
  * The following block of code may be used to automatically register your
@@ -47,7 +49,16 @@ const createApp = async () =>{
         router, // ルーティングの定義を読み込む
         store,
         components: { App }, // ルートコンポーネントの使用を宣言する
-        template: '<App />' // ルートコンポーネントを描画する
+        template: '<App />', // ルートコンポーネントを描画する
+        data: {
+            title: '入力フォームバリデーション',
+            text: '',
+        },
+        validations: {
+        text: {
+            required
+        }
+},
     })
 };
 

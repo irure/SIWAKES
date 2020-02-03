@@ -134,7 +134,51 @@ const actions = {
   },async updateTask(context,data){
     context.commit('setApiStatus', null)
     console.log(data)
-    const response = await axios.put('/api/task/'+data.id+'/'+data.task)
+    const response = await axios.put('/api/task/'+data.id+'/task/'+data.task)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+    
+  //時間を更新
+  },async updateHowlong(context,data){
+    context.commit('setApiStatus', null)
+    console.log(data)
+    const response = await axios.put('/api/task/'+data.id+'/howlong/'+data.howlong)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //回数を更新
+  async updateHowtimes(context,data){
+    context.commit('setApiStatus', null)
+    console.log(data)
+    const response = await axios.put('/api/task/'+data.id+'/howtimes/'+data.howtimes)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //担当を更新
+  async updateCharge(context,data){
+    context.commit('setApiStatus', null)
+    console.log(data)
+    const response = await axios.put('/api/task/'+data.id+'/charge/'+data.charge)
     
     if (response.status === OK) {
       context.commit('setApiStatus', true)

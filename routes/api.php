@@ -25,6 +25,9 @@ Route::group(["middleware" => "auth.api"],function(){
     Route::get('/task','TaskController@get');
     Route::post('/task','TaskController@post');
     Route::delete('/task/{id}','TaskController@delete');
-    Route::put('/task/{id}/{task}','TaskController@update');
+    Route::put('/task/{id}/task/{task}','TaskController@taskUpdate');
+    Route::put('/task/{id}/howlong/{howlong}','TaskController@howlongUpdate');
+    Route::put('/task/{id}/howtimes/{howtimes}','TaskController@howtimesUpdate');
+    Route::put('/task/{id}/charge/{charge}','TaskController@chargeUpdate');
 });
 

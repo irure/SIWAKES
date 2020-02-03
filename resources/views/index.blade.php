@@ -16,6 +16,8 @@
   <!-- Styles -->
   <link rel="stylesheet" href="https://hypertext-candy.s3-ap-northeast-1.amazonaws.com/posts/vue-laravel-tutorial/app.css">
   <link rel="stylesheet" href="https://lipis.github.io/bootstrap-social/bootstrap-social.css"  >
+  <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.4/dist/vuelidate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.4/dist/validators.min.js"></script>
   
 </head>
 <body>
