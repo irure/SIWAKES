@@ -189,6 +189,35 @@ const actions = {
     context.commit('error/setCode', response.status, { root: true })
   },
   
+  //担当一覧を取得
+  async getCharge(context){
+    context.commit('setApiStatus', null)
+    const response = await axios.get('/api/charge')
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //担当一覧の担当を更新
+  async updateChargeList(context,data){
+    context.commit('setApiStatus', null)
+    console.log(data)
+    const response = await axios.put('/api/chargeList/'+data.id+'/'+data.charge)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
 }
 
 export default {

@@ -3,9 +3,9 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div>
-                    <button type="button" class="btn btn-danger">タスク一覧</button>
-                    <button type="button" class="btn btn-danger">グラフ</button>
-                    <button type="button" class="btn btn-danger">担当者変更</button>
+                    <router-link to="/" tag="button">タスク一覧</router-link>
+                    <router-link to="/foo" tag="button">グラフ</router-link>
+                    <router-link to="/charge" tag="button">担当者変更</router-link>
                 </div>
                 <div class="card" v-for="task in tasks">
                     <div class="card-header">
@@ -18,7 +18,7 @@
                         </select>
                         <select class="form-control" v-model="task.charge" @blur="updateCharge(task.id)">
                             <option v-for="charge in charges">
-                                {{ charge }}
+                                {{ charge.charge }}
                             </option>
                         </select>
                         <button type="button" class="btn btn-danger" @click="deleteTask(task.id)">Delete</button>
@@ -44,7 +44,7 @@
                     task:'',
                 },
                 times:[1,2,3,4,5,6,7],
-                charges:['a','b'],
+                charges:[]
             }
         },
         methods:{
@@ -87,9 +87,15 @@
                     this.getTaskList()
                 })
             },
+            getChargeList(){
+                this.$store.dispatch('auth/getCharge').then((result)=>{
+                    this.charges = result
+                })
+            }
         },
         mounted() {
             this.getTaskList()
+            this.getChargeList()
             console.log('Component mounted.')
         }
     }

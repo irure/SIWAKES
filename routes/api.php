@@ -29,5 +29,9 @@ Route::group(["middleware" => "auth.api"],function(){
     Route::put('/task/{id}/howlong/{howlong}','TaskController@howlongUpdate');
     Route::put('/task/{id}/howtimes/{howtimes}','TaskController@howtimesUpdate');
     Route::put('/task/{id}/charge/{charge}','TaskController@chargeUpdate');
+    
+    Route::get('/charge','ChargeController@get');
+    Route::put('/chargeList/{charge_id}/{charge}','ChargeController@chargeListUpdate');
+    
 });
 

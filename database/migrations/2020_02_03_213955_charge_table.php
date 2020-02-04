@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class TaskTable extends Migration
+class ChargeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,16 +14,11 @@ class TaskTable extends Migration
     public function up()
     {
         //
-        Schema::create('tasks', function (Blueprint $table) {
+        Schema::create('charges', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
-            $table->string('task');
-            $table->integer('howlong')->nullable();
-            $table->integer('howtimes')->nullable();
+            $table->integer('charge_id');
             $table->string('charge')->nullable();
-            $table->string('charge2')->nullable();
-            
-            
             $table->timestamps();
         });
     }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Task;
+use App\Charge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +18,7 @@ class TaskController extends Controller
         $task->task = $request->task;
         $task->howtimes = 1;
         $task->howlong = 30;
-        $task->charge = 'a';
+        $task->charge = '気づいた方';
         $task->user_id = Auth::id();
         $task->save();
         return response("OK", 200);

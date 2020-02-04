@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 // ページコンポーネントをインポートする
 import Tasks from './pages/Tasks.vue'
 import Login from './pages/Login.vue'
+import Charge from './pages/Charge.vue'
 import SystemError from './pages/errors/System.vue'
 import Redirect from './pages/oauth/twitter/Redirect.vue'
 
@@ -35,6 +36,9 @@ const routes = [
   },{
     path: '/oauth/twitter',
     component: Redirect
+  },{
+    path: '/charge',
+    component: Charge
   }
   
 ]

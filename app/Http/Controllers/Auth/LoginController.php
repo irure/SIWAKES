@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Charge;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Socialite;
-use Storage;
 use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
@@ -112,10 +112,28 @@ class LoginController extends Controller
                Storage::put('public/profile_images/' . $file_name, $img);
                $newuser->avatar = $file_name;
            }*/
+           
+           
            //ユーザ作成     
            $newuser->save();
            //ログインしてトップページにリダイレクト
            Auth::login($newuser);
+           
+           $charge = new Charge;
+           $charge->charge = '気づいた方';
+           $charge->user_id = $newuser->id;
+           $charge->charge_id = 1;
+           $charge2 = new Charge;
+           $charge2->charge = '夫';
+           $charge2->user_id = $newuser->id;
+           $charge2->charge_id = 2;
+           $charge3 = new Charge;
+           $charge3->charge = '妻';
+           $charge3->charge_id = 3;
+           $charge3->user_id = $newuser->id;
+           
+           $charge->save();$charge2->save();$charge3->save();
+           
            return redirect('/');
        }
        
