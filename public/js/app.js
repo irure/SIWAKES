@@ -2176,7 +2176,7 @@ __webpack_require__.r(__webpack_exports__);
         })[0].charge
       };
       this.$store.dispatch('auth/updateChargeList', {
-        id: id,
+        charge_id: id,
         charge: data.charge
       }).then(function () {
         _this2.getChargeList();
@@ -39165,26 +39165,27 @@ var actions = {
               context.commit('setApiStatus', null);
               console.log(data);
               _context12.next = 4;
-              return axios.put('/api/chargeList/' + data.id + '/' + data.charge);
+              return axios.put('/api/charge/' + data.charge_id + '/' + data.charge);
 
             case 4:
               response = _context12.sent;
+              console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context12.next = 8;
+                _context12.next = 9;
                 break;
               }
 
               context.commit('setApiStatus', true);
               return _context12.abrupt("return", response.data);
 
-            case 8:
+            case 9:
               context.commit('setApiStatus', false);
               context.commit('error/setCode', response.status, {
                 root: true
               });
 
-            case 10:
+            case 11:
             case "end":
               return _context12.stop();
           }

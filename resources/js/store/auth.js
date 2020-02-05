@@ -208,7 +208,8 @@ const actions = {
   async updateChargeList(context,data){
     context.commit('setApiStatus', null)
     console.log(data)
-    const response = await axios.put('/api/chargeList/'+data.id+'/'+data.charge)
+    const response = await axios.put('/api/charge/'+data.charge_id+'/'+data.charge)
+    console.log(response.data)
     
     if (response.status === OK) {
       context.commit('setApiStatus', true)

@@ -33,7 +33,7 @@
             },
             updateChargeList(id){
                 let data = {charge:this.charges.filter((v)=>{return v.id === id})[0].charge}
-                this.$store.dispatch('auth/updateChargeList',{id:id,charge:data.charge}).then(()=>{
+                this.$store.dispatch('auth/updateChargeList',{charge_id:id,charge:data.charge}).then(()=>{
                     this.getChargeList()
                 })
             },
