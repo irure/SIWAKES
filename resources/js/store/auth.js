@@ -219,6 +219,21 @@ const actions = {
     context.commit('setApiStatus', false)
     context.commit('error/setCode', response.status, { root: true })
   },
+  
+  //グラフデータを取得
+  async getGraph(context){
+    context.commit('setApiStatus', null)
+    const response = await axios.get('/api/getgraph')
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
 }
 
 export default {

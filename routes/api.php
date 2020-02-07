@@ -33,5 +33,7 @@ Route::group(["middleware" => "auth.api"],function(){
     Route::get('/charge','ChargeController@get');
     Route::put('/charge/{charge_id}/{charge}','ChargeController@chargeListUpdate');
     
+    Route::get('/getgraph','ChargeController@getgraph');
+    
 });
 

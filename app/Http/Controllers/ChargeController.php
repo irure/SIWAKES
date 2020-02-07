@@ -19,14 +19,6 @@ class ChargeController extends Controller
     }
     
     public function chargeListUpdate(Request $request,$charge_id){
-        //$charge = Auth::user()->user_id()->charge_id()->find($charge_id);
-        //$charge = Auth::whereHas('charges', function($q){
-         //   $q->where('charge_id', $charge_id);
-        //})->get();
-        //$charge = Auth::whereHas('charges', function($q){
-        //    $q->where('charge_id', $charge_id);
-        //})->get();
-        
         $and=true;
         $charge=Auth::user()->charges()->where('charge_id',$charge_id)->first();
         
@@ -36,8 +28,7 @@ class ChargeController extends Controller
         $userCharges = Task::when($and, function($q) use($user_id,$charge_old){
             $q->where('user_id', $user_id)
             ->where('charge', $charge_old)
-            ;
-        })->get();
+            ;})->get();
         
         foreach ($userCharges as $userCharge) {
             $userCharge->charge = $request->charge;
@@ -46,5 +37,27 @@ class ChargeController extends Controller
         
         $charge->charge =$request->charge;
         $charge->save();
+    }
+    
+    public function getgraph(){
+        
+        $and=true;
+        $charges = Auth::user()->charges()->get('charge')->all();
+        //$charges = json_decode(json_encode($charges), true);
+        $user_id=Auth::id();
+
+        //$data[];
+        $charges = array_column($charges, 'charge');
+        foreach($charges as $key => $value){
+            $data[$value]=0;
+            $userCharges = Task::when($and, function($q) use($user_id,$value){
+                $q->where('user_id', $user_id)
+                ->where('charge', $value)
+            ;})->get();
+            foreach($userCharges as $userCharge){
+                $data[$value] += $userCharge->howlong * $userCharge->howtimes;
+            }
+        }
+        return $data;
     }
 }

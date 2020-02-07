@@ -4,7 +4,7 @@
             <div class="col-md-8">
                 <div>
                     <router-link to="/" tag="button">タスク一覧</router-link>
-                    <router-link to="/foo" tag="button">グラフ</router-link>
+                    <router-link to="/graph" tag="button">グラフ</router-link>
                     <router-link to="/charge" tag="button">担当者変更</router-link>
                 </div>
                 <div class="card" v-for="charge in charges">

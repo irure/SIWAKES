@@ -18,6 +18,7 @@
   <link rel="stylesheet" href="https://lipis.github.io/bootstrap-social/bootstrap-social.css"  >
   <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.4/dist/vuelidate.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.4/dist/validators.min.js"></script>
+  <script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
   
 </head>
 <body>

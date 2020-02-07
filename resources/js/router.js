@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 import Tasks from './pages/Tasks.vue'
 import Login from './pages/Login.vue'
 import Charge from './pages/Charge.vue'
+import Graph from './pages/Graph.vue'
 import SystemError from './pages/errors/System.vue'
 import Redirect from './pages/oauth/twitter/Redirect.vue'
 
@@ -39,6 +40,10 @@ const routes = [
   },{
     path: '/charge',
     component: Charge
+  },{
+    path: '/graph',
+    component: Graph,
+    name:'VueChartKick'
   }
   
 ]

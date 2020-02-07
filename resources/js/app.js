@@ -22,6 +22,13 @@ Vue.prototype.$http = axios;
 Vue.use(window.vuelidate.default);
 const {required,email,integer} = window.validators;
 
+import Chartkick from 'vue-chartkick'
+import Chart from 'chart.js'
+
+Vue.use(Chartkick.use(Chart))
+const StarRating = window.VueStarRating.default;
+Vue.component('star-rating', StarRating);
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

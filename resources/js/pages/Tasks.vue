@@ -4,9 +4,10 @@
             <div class="col-md-8">
                 <div>
                     <router-link to="/" tag="button">タスク一覧</router-link>
-                    <router-link to="/foo" tag="button">グラフ</router-link>
+                    <router-link to="/graph" tag="button">グラフ</router-link>
                     <router-link to="/charge" tag="button">担当者変更</router-link>
                 </div>
+                タスク名　１回あたりの時間　週に何回　担当者
                 <div class="card" v-for="task in tasks">
                     <div class="card-header">
                         <input type="text" class="form-control" id="task" v-model="task.task" @blur="updateTask(task.id)">
