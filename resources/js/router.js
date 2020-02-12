@@ -3,9 +3,11 @@ import VueRouter from 'vue-router'
 
 // ページコンポーネントをインポートする
 import Tasks from './pages/Tasks.vue'
+import Tasks2 from './pages/Tasks2.vue'
 import Login from './pages/Login.vue'
 import Charge from './pages/Charge.vue'
 import Graph from './pages/Graph.vue'
+import Graph2 from './pages/Graph2.vue'
 import SystemError from './pages/errors/System.vue'
 import Redirect from './pages/oauth/twitter/Redirect.vue'
 
@@ -44,7 +46,14 @@ const routes = [
     path: '/graph',
     component: Graph,
     name:'VueChartKick'
-  }
+  },{
+    path: '/Tasks2',
+    component: Tasks2
+  },{
+    path: '/graph2',
+    component: Graph2,
+    name:'VueChartKick'
+  },
   
 ]
 

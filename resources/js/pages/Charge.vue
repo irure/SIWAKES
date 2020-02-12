@@ -2,14 +2,16 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div>
-                    <router-link to="/" tag="button">タスク一覧</router-link>
-                    <router-link to="/graph" tag="button">グラフ</router-link>
-                    <router-link to="/charge" tag="button">担当者変更</router-link>
+                <div class="panel toppanel">
+                    <router-link to="/" tag="button" class="button">タスク一覧</router-link>
+                    <router-link to="/graph" tag="button" class="button">グラフ</router-link>
+                    <router-link to="/charge" tag="button" class="button sbutton">担当者変更</router-link>
                 </div>
-                <div class="card" v-for="charge in charges">
-                    <div class="card-header">
-                        <input type="text" class="form-control" id="charge" v-model="charge.charge" @blur="updateChargeList(charge.id)">
+                <div class="panel">
+                    <div class="card" v-for="charge in charges">
+                        <div class="card-header">
+                            担当{{charge.charge_id}}:<input type="text" class="form-control" id="charge" v-model="charge.charge" @blur="updateChargeList(charge.id)">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -37,9 +39,19 @@
                     this.getChargeList()
                 })
             },
+            getPart(){
+                this.$store.dispatch('auth/getPart').then((result)=>{
+                    if(result){
+                        this.$router.replace('/')
+                    }else{
+                        this.part = result
+                    }
+                })
+            },
         },
         mounted() {
             this.getChargeList()
+            this.getPart()
             console.log('Component mounted.')
         }
     }

@@ -39,7 +39,7 @@ class ChargeController extends Controller
         $charge->save();
     }
     
-    public function getgraph(){
+    public function getGraph(){
         
         $and=true;
         $charges = Auth::user()->charges()->get('charge')->all();
@@ -53,6 +53,28 @@ class ChargeController extends Controller
             $userCharges = Task::when($and, function($q) use($user_id,$value){
                 $q->where('user_id', $user_id)
                 ->where('charge', $value)
+            ;})->get();
+            foreach($userCharges as $userCharge){
+                $data[$value] += $userCharge->howlong * $userCharge->howtimes;
+            }
+        }
+        return $data;
+    }
+    
+    public function getGraph2(){
+        
+        $and=true;
+        $charges = Auth::user()->charges()->get('charge')->all();
+        
+        $user_id=Auth::id();
+
+        //$data[];
+        $charges = array_column($charges, 'charge');
+        foreach($charges as $key => $value){
+            $data[$value]=0;
+            $userCharges = Task::when($and, function($q) use($user_id,$value){
+                $q->where('user_id', $user_id)
+                ->where('charge2', $value)
             ;})->get();
             foreach($userCharges as $userCharge){
                 $data[$value] += $userCharge->howlong * $userCharge->howtimes;

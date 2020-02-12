@@ -2,19 +2,31 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <div class="panel toppanel" style="padding:5px;">
+                    <router-link to="/" tag="button"class="button" @click.native="setPartFalse"><<1回目に戻る</router-link>
+                </div>
                 <div class="panel toppanel">
-                    <router-link to="/" tag="button"class="button">タスク一覧</router-link>
-                    <router-link to="/graph" tag="button"class="button sbutton">グラフ</router-link>
-                    <router-link to="/charge" tag="button"class="button">担当者変更</router-link>
+                    <router-link to="/Tasks2" tag="button"class="button">タスク一覧</router-link>
+                    <router-link to="/graph2" tag="button"class="button sbutton">グラフ</router-link>
                 </div>
                 <div class="panel">
-                    <div class="card-header">
+                    <ul class="tab" style="justify-content:center;">
+                        <li class="tab__item":class="{'tab__item--active': tab === 1 }"@click="tab = 1">1回目のグラフ</li>
+                        <li class="tab__item" :class="{'tab__item--active': tab === 2 }" @click="tab = 2">2回目のグラフ</li>
+                    </ul>
+                    <div class="card-header" v-show="tab === 1">
                         <pie-chart :data="chartData" :colors ="colors" download = "graph"></pie-chart>
+                        <div>
+                        1回目の満足度は：<star-rating :star-size="30" v-model="rating" @rating-selected ="setRating" :read-only = true class="star-rating"></star-rating><br>
+                        </div>
                     </div>
-                    <div>
-                        満足度は：<star-rating :star-size="30" v-model="rating" @rating-selected ="setRating" class="star-rating"></star-rating><br>
-                    </div>
-                    <button v-on:click="openModal">これで完成！</button>
+                    
+                    <div class="card-header" v-show="tab === 2">
+                        <pie-chart :data="chartData2" :colors ="colors" download = "graph2"></pie-chart>
+                        <div>
+                        2回目の満足度は：<star-rating :star-size="30" v-model="rating2" @rating-selected ="setRating2" class="star-rating"></star-rating><br>
+                        </div>
+                        <button v-on:click="openModal">これで完成！</button>
                     
                     <div id="overlay" v-show="showContent">
                         <div id="mordal">
@@ -29,9 +41,12 @@
                                 <label>ダウンロードしたグラフを追加できます</label><br>
                                 <div class="text-danger" v-if="errors.image" v-text="errors.image"></div>
                             </div>
-                        <p><button v-on:click="finishGraph" style="float:left;">ツイートせず1回目の仕分けを完了</button></p>
-                        <p><button v-on:click="postTwitter" style="float:right; text-align:center;"class="tweet">ツイートして1回目の仕分けを完了</button></p>
+                        <p><button v-on:click="finishGraph" style="float:left;">ツイートせず完了</button></p>
+                        <p><button v-on:click="postTwitter" style="float:right; text-align:center;"class="tweet">ツイートして完了</button></p>
                     </div>
+                    </div>
+                    
+                    
                 </div>
                 </div>
             </div>
@@ -44,9 +59,12 @@
         data(){
             return {
                 active_task: null,
+                tab: 2,
                 charges:[],
                 chartData: [],
+                chartData2: [],
                 rating: 0,
+                rating2:0,
                 colors: ["lightskyblue", "gainsboro", "lightpink"],
                 showContent: false,
                 text: '',
@@ -69,14 +87,33 @@
                     this.chartData = result
                 })
             },
+            getGraphData2(){
+                this.$store.dispatch('auth/getGraph2').then((result)=>{
+                    this.chartData2 = result
+                })
+            },
+            getRating(){
+                this.$store.dispatch('auth/getRating').then((result)=>{
+                    this.rating = result
+                })
+            },
+            getRating2(){
+                this.$store.dispatch('auth/getRating2').then((result)=>{
+                    this.rating2 = result
+                })
+            },
             setRating: function(rating){
                 this.rating= rating
                 this.$store.dispatch('auth/setRating',{rating:rating})
             },
+            setRating2: function(rating2){
+                this.rating2= rating2
+                this.$store.dispatch('auth/setRating2',{rating2:rating2})
+            },
             openModal: function(){
                 this.showContent = true
                 
-                this.$store.dispatch('auth/getText').then((result)=>{
+                this.$store.dispatch('auth/getText2').then((result)=>{
                     this.text = result
                 })
             },
@@ -85,7 +122,6 @@
             },
             finishGraph(){
                 this.showContent=false
-                this.$store.dispatch('auth/setPart')
                 this.$router.replace('/Tasks2')
             },
             onFileChange(e) {
@@ -101,27 +137,28 @@
                 if(this.imageFile)formData.append('image', this.imageFile);
                 
                 this.$store.dispatch('auth/postTwitter',formData)
-                this.$store.dispatch('auth/setPart')
+                this.showContent2=true
                 this.$router.replace('/Tasks2')
-            },
-            getRating(){
-                this.$store.dispatch('auth/getRating').then((result)=>{
-                    this.rating = result
-                })
             },
             getPart(){
                 this.$store.dispatch('auth/getPart').then((result)=>{
                     if(result){
-                        
-                    }else{
                         this.part = result
+                    }else{
+                        this.$router.replace('/')
                     }
                 })
             },
+            setPartFalse(){
+                this.$store.dispatch('auth/setPartFalse')
+                this.$router.replace('/')
+            }
         },
         mounted() {
             this.getGraphData()
+            this.getGraphData2()
             this.getRating()
+            this.getRating2()
             this.getPart()
             console.log('Component mounted.')
         }

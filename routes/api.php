@@ -29,11 +29,26 @@ Route::group(["middleware" => "auth.api"],function(){
     Route::put('/task/{id}/howlong/{howlong}','TaskController@howlongUpdate');
     Route::put('/task/{id}/howtimes/{howtimes}','TaskController@howtimesUpdate');
     Route::put('/task/{id}/charge/{charge}','TaskController@chargeUpdate');
+    Route::put('/task/{id}/charge2/{charge2}','TaskController@chargeUpdate2');
     
     Route::get('/charge','ChargeController@get');
     Route::put('/charge/{charge_id}/{charge}','ChargeController@chargeListUpdate');
     
-    Route::get('/getgraph','ChargeController@getgraph');
+    Route::get('/getgraph','ChargeController@getGraph');
+    Route::get('/getgraph2','ChargeController@getGraph2');
+    
+    Route::post('/setRating','TaskController@setRating');
+    Route::post('/setRating2','TaskController@setRating2');
+    Route::get('/getRating','TaskController@getRating');
+    Route::get('/getRating2','TaskController@getRating2');
+    Route::post('/setPart','TaskController@setPart');
+    Route::post('/setPartFalse','TaskController@setPartFalse');
+    Route::get('/getPart','TaskController@getPart');
+    
+    Route::get('/getText','TaskController@getText');
+    Route::get('/getText2','TaskController@getText2');
+    
+    Route::post('/postTwitter', 'ShareController@store');  // Ajax
     
 });
 

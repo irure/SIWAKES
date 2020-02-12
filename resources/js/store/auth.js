@@ -11,7 +11,8 @@ const state = {
 
 const getters = {
   check: state => !! state.user,
-  username: state => state.user ? state.user.name : ''
+  username: state => state.user ? state.user.name : '',
+  part: state => state.user ? state.user.part : ''
 }
 
 const mutations = {
@@ -29,15 +30,6 @@ const mutations = {
   },
   setToken (state,  token ) {
     state.token = token
-    
-    // Store token in cookies
-    if (inBrowser) {
-      if (token) {
-        Cookies.set('token', token, { expires: 30 })
-      } else {
-        Cookies.remove('token')
-      }
-    }
   }
 }
 
@@ -189,6 +181,21 @@ const actions = {
     context.commit('error/setCode', response.status, { root: true })
   },
   
+  //担当2を更新
+  async updateCharge2(context,data){
+    context.commit('setApiStatus', null)
+    console.log(data)
+    const response = await axios.put('/api/task/'+data.id+'/charge2/'+data.charge2)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
   //担当一覧を取得
   async getCharge(context){
     context.commit('setApiStatus', null)
@@ -234,6 +241,161 @@ const actions = {
     context.commit('setApiStatus', false)
     context.commit('error/setCode', response.status, { root: true })
   },
+  
+  //グラフデータ2を取得
+  async getGraph2(context){
+    context.commit('setApiStatus', null)
+    const response = await axios.get('/api/getgraph2')
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //星の数をDBに保存
+  async setRating(context,rating){
+    const response = await axios.post('/api/setRating',rating)
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //星の数2をDBに保存
+  async setRating2(context,rating2){
+    const response = await axios.post('/api/setRating2',rating2)
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //星の数をDBから取得
+  async getRating(context){
+    const response = await axios.get('/api/getRating')
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //星の数2をDBから取得
+  async getRating2(context){
+    const response = await axios.get('/api/getRating2')
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //テキストを取得
+  async getText(context){
+    const response = await axios.get('/api/getText')
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //テキスト2を取得
+  async getText2(context){
+    const response = await axios.get('/api/getText2')
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //Twitterに投稿
+  async postTwitter(context,data){
+    const response = await axios.post('/api/postTwitter',data)
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //２回目に設定
+  async setPart(context){
+    const response = await axios.post('/api/setPart')
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //Part情報を取得
+  async getPart(context){
+    const response = await axios.get('/api/getPart')
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
+  
+  //Partを１回目に設定
+  async setPartFalse(context){
+    const response = await axios.post('/api/setPartFalse')
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  }
 }
 
 export default {

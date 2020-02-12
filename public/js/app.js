@@ -2105,12 +2105,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     isLogin: function isLogin() {
@@ -2133,6 +2127,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -2181,10 +2177,22 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         _this2.getChargeList();
       });
+    },
+    getPart: function getPart() {
+      var _this3 = this;
+
+      this.$store.dispatch('auth/getPart').then(function (result) {
+        if (result) {
+          _this3.$router.replace('/');
+        } else {
+          _this3.part = result;
+        }
+      });
     }
   },
   mounted: function mounted() {
     this.getChargeList();
+    this.getPart();
     console.log('Component mounted.');
   }
 });
@@ -2228,15 +2236,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       active_task: null,
       charges: [],
-      chartData: [['Jan', 44], ['Feb', 27], ['Mar', 60]],
+      chartData: [],
       rating: 0,
       colors: ["lightskyblue", "gainsboro", "lightpink"],
-      showContent: false
+      showContent: false,
+      text: '',
+      image: '',
+      imageFile: null,
+      errors: {
+        text: '',
+        image: ''
+      }
     };
   },
   methods: {
@@ -2248,21 +2276,262 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getGraphData: function getGraphData() {
-      this.$store.dispatch('auth/getGraph').then(function (result) {//this.chartData = result
+      var _this2 = this;
+
+      this.$store.dispatch('auth/getGraph').then(function (result) {
+        _this2.chartData = result;
       });
     },
     setRating: function setRating(rating) {
       this.rating = rating;
+      this.$store.dispatch('auth/setRating', {
+        rating: rating
+      });
     },
     openModal: function openModal() {
+      var _this3 = this;
+
       this.showContent = true;
+      this.$store.dispatch('auth/getText').then(function (result) {
+        _this3.text = result;
+      });
     },
     closeModal: function closeModal() {
       this.showContent = false;
+    },
+    finishGraph: function finishGraph() {
+      this.showContent = false;
+      this.$store.dispatch('auth/setPart');
+      this.$router.replace('/Tasks2');
+    },
+    onFileChange: function onFileChange(e) {
+      // 選択された画像を変数で保持する
+      this.imageFile = e.target.files[0];
+    },
+    postTwitter: function postTwitter() {
+      this.showContent = false; // 画像をアップロード
+
+      var url = '/share';
+      var formData = new FormData();
+      formData.append('text', this.text);
+      if (this.imageFile) formData.append('image', this.imageFile);
+      this.$store.dispatch('auth/postTwitter', formData);
+      this.$store.dispatch('auth/setPart');
+      this.$router.replace('/Tasks2');
+    },
+    getRating: function getRating() {
+      var _this4 = this;
+
+      this.$store.dispatch('auth/getRating').then(function (result) {
+        _this4.rating = result;
+      });
+    },
+    getPart: function getPart() {
+      var _this5 = this;
+
+      this.$store.dispatch('auth/getPart').then(function (result) {
+        if (result) {} else {
+          _this5.part = result;
+        }
+      });
     }
   },
   mounted: function mounted() {
     this.getGraphData();
+    this.getRating();
+    this.getPart();
+    console.log('Component mounted.');
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Graph2.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Graph2.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      active_task: null,
+      tab: 2,
+      charges: [],
+      chartData: [],
+      chartData2: [],
+      rating: 0,
+      rating2: 0,
+      colors: ["lightskyblue", "gainsboro", "lightpink"],
+      showContent: false,
+      text: '',
+      image: '',
+      imageFile: null,
+      errors: {
+        text: '',
+        image: ''
+      }
+    };
+  },
+  methods: {
+    getChargeList: function getChargeList() {
+      var _this = this;
+
+      this.$store.dispatch('auth/getCharge').then(function (result) {
+        _this.charges = result;
+      });
+    },
+    getGraphData: function getGraphData() {
+      var _this2 = this;
+
+      this.$store.dispatch('auth/getGraph').then(function (result) {
+        _this2.chartData = result;
+      });
+    },
+    getGraphData2: function getGraphData2() {
+      var _this3 = this;
+
+      this.$store.dispatch('auth/getGraph2').then(function (result) {
+        _this3.chartData2 = result;
+      });
+    },
+    getRating: function getRating() {
+      var _this4 = this;
+
+      this.$store.dispatch('auth/getRating').then(function (result) {
+        _this4.rating = result;
+      });
+    },
+    getRating2: function getRating2() {
+      var _this5 = this;
+
+      this.$store.dispatch('auth/getRating2').then(function (result) {
+        _this5.rating2 = result;
+      });
+    },
+    setRating: function setRating(rating) {
+      this.rating = rating;
+      this.$store.dispatch('auth/setRating', {
+        rating: rating
+      });
+    },
+    setRating2: function setRating2(rating2) {
+      this.rating2 = rating2;
+      this.$store.dispatch('auth/setRating2', {
+        rating2: rating2
+      });
+    },
+    openModal: function openModal() {
+      var _this6 = this;
+
+      this.showContent = true;
+      this.$store.dispatch('auth/getText2').then(function (result) {
+        _this6.text = result;
+      });
+    },
+    closeModal: function closeModal() {
+      this.showContent = false;
+    },
+    finishGraph: function finishGraph() {
+      this.showContent = false;
+      this.$router.replace('/Tasks2');
+    },
+    onFileChange: function onFileChange(e) {
+      // 選択された画像を変数で保持する
+      this.imageFile = e.target.files[0];
+    },
+    postTwitter: function postTwitter() {
+      this.showContent = false; // 画像をアップロード
+
+      var url = '/share';
+      var formData = new FormData();
+      formData.append('text', this.text);
+      if (this.imageFile) formData.append('image', this.imageFile);
+      this.$store.dispatch('auth/postTwitter', formData);
+      this.showContent2 = true;
+      this.$router.replace('/Tasks2');
+    },
+    getPart: function getPart() {
+      var _this7 = this;
+
+      this.$store.dispatch('auth/getPart').then(function (result) {
+        if (result) {
+          _this7.part = result;
+        } else {
+          _this7.$router.replace('/');
+        }
+      });
+    },
+    setPartFalse: function setPartFalse() {
+      this.$store.dispatch('auth/setPartFalse');
+      this.$router.replace('/');
+    }
+  },
+  mounted: function mounted() {
+    this.getGraphData();
+    this.getGraphData2();
+    this.getRating();
+    this.getRating2();
+    this.getPart();
     console.log('Component mounted.');
   }
 });
@@ -2364,6 +2633,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -2503,11 +2775,134 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('auth/getCharge').then(function (result) {
         _this8.charges = result;
       });
+    },
+    getPart: function getPart() {
+      var _this9 = this;
+
+      this.$store.dispatch('auth/getPart').then(function (result) {
+        if (result) {} else {
+          _this9.part = result;
+        }
+      });
     }
   },
   mounted: function mounted() {
     this.getTaskList();
     this.getChargeList();
+    this.getPart();
+    console.log('Component mounted.');
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Tasks2.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Tasks2.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      active_task: null,
+      tasks: [],
+      taskForm: {
+        task: ''
+      },
+      times: [1, 2, 3, 4, 5, 6, 7],
+      charges: []
+    };
+  },
+  methods: {
+    getTaskList: function getTaskList() {
+      var _this = this;
+
+      this.$store.dispatch('auth/getTask').then(function (result) {
+        _this.tasks = result;
+      });
+    },
+    updateCharge2: function updateCharge2(id) {
+      var _this2 = this;
+
+      var data = {
+        charge2: this.tasks.filter(function (v) {
+          return v.id === id;
+        })[0].charge2
+      };
+      this.$store.dispatch('auth/updateCharge2', {
+        id: id,
+        charge2: data.charge2
+      }).then(function () {
+        _this2.getTaskList();
+      });
+    },
+    getChargeList: function getChargeList() {
+      var _this3 = this;
+
+      this.$store.dispatch('auth/getCharge').then(function (result) {
+        _this3.charges = result;
+      });
+    },
+    getPart: function getPart() {
+      var _this4 = this;
+
+      this.$store.dispatch('auth/getPart').then(function (result) {
+        if (result) {
+          _this4.part = result;
+        } else {
+          _this4.$router.replace('/');
+        }
+      });
+    },
+    setPartFalse: function setPartFalse() {
+      this.$store.dispatch('auth/setPartFalse');
+      this.$router.replace('/');
+    }
+  },
+  mounted: function mounted() {
+    this.getTaskList();
+    this.getChargeList();
+    this.getPart();
     console.log('Component mounted.');
   }
 });
@@ -21137,7 +21532,26 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#overlay{\n  /*　要素を重ねた時の順番　*/\n  z-index:1;\n\n  /*　画面全体を覆う設定　*/\n  position:fixed;\n  top:0;\n  left:0;\n  width:100%;\n  height:100%;\n  background-color:rgba(0,0,0,0.5);\n\n  /*　画面の中央に要素を表示させる設定　*/\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n#mordal{\n  z-index:2;\n  width:50%;\n  padding: 1em;\n  background:#fff;\n}\n", ""]);
+exports.push([module.i, "\n#overlay{\n  /*　要素を重ねた時の順番　*/\n  z-index:1;\n\n  /*　画面全体を覆う設定　*/\n  position:fixed;\n  top:0;\n  left:0;\n  width:100%;\n  height:100%;\n  background-color:rgba(0,0,0,0.5);\n\n  /*　画面の中央に要素を表示させる設定　*/\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n#mordal{\n  z-index:2;\n  width:70%;\n  padding: 1em;\n  background:cornsilk;\n}\n.tweet{\n    background-color:#2795e9;\n    color:#fff;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Graph2.vue?vue&type=style&index=0&lang=css&":
+/*!*******************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Graph2.vue?vue&type=style&index=0&lang=css& ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#overlay{\n  /*　要素を重ねた時の順番　*/\n  z-index:1;\n\n  /*　画面全体を覆う設定　*/\n  position:fixed;\n  top:0;\n  left:0;\n  width:100%;\n  height:100%;\n  background-color:rgba(0,0,0,0.5);\n\n  /*　画面の中央に要素を表示させる設定　*/\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n#mordal{\n  z-index:2;\n  width:70%;\n  padding: 1em;\n  background:cornsilk;\n}\n.tweet{\n    background-color:#2795e9;\n    color:#fff;\n}\n", ""]);
 
 // exports
 
@@ -58430,6 +58844,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Graph2.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Graph2.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Graph2.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Graph2.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/lib/addStyles.js":
 /*!****************************************************!*\
   !*** ./node_modules/style-loader/lib/addStyles.js ***!
@@ -59463,10 +59907,6 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "navbar__menu" }, [
         _vm.isLogin
-          ? _c("div", { staticClass: "navbar__item" }, [_vm._m(0)])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.isLogin
           ? _c("span", { staticClass: "navbar__item" }, [
               _vm._v("\n      " + _vm._s(_vm.username) + "\n    ")
             ])
@@ -59490,17 +59930,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("button", { staticClass: "button" }, [
-      _c("i", { staticClass: "icon" }),
-      _vm._v("\n        1回目\n      ")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -59524,31 +59954,46 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-8" },
-        [
-          _c(
-            "div",
-            [
-              _c("router-link", { attrs: { to: "/", tag: "button" } }, [
-                _vm._v("タスク一覧")
-              ]),
-              _vm._v(" "),
-              _c("router-link", { attrs: { to: "/graph", tag: "button" } }, [
-                _vm._v("グラフ")
-              ]),
-              _vm._v(" "),
-              _c("router-link", { attrs: { to: "/charge", tag: "button" } }, [
-                _vm._v("担当者変更")
-              ])
-            ],
-            1
-          ),
-          _vm._v(" "),
+      _c("div", { staticClass: "col-md-8" }, [
+        _c(
+          "div",
+          { staticClass: "panel toppanel" },
+          [
+            _c(
+              "router-link",
+              { staticClass: "button", attrs: { to: "/", tag: "button" } },
+              [_vm._v("タスク一覧")]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              { staticClass: "button", attrs: { to: "/graph", tag: "button" } },
+              [_vm._v("グラフ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "button sbutton",
+                attrs: { to: "/charge", tag: "button" }
+              },
+              [_vm._v("担当者変更")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "panel" },
           _vm._l(_vm.charges, function(charge) {
             return _c("div", { staticClass: "card" }, [
               _c("div", { staticClass: "card-header" }, [
+                _vm._v(
+                  "\n                        担当" +
+                    _vm._s(charge.charge_id) +
+                    ":"
+                ),
                 _c("input", {
                   directives: [
                     {
@@ -59575,10 +60020,10 @@ var render = function() {
                 })
               ])
             ])
-          })
-        ],
-        2
-      )
+          }),
+          0
+        )
+      ])
     ])
   ])
 }
@@ -59609,85 +60054,516 @@ var render = function() {
       _c("div", { staticClass: "col-md-8" }, [
         _c(
           "div",
+          { staticClass: "panel toppanel" },
           [
-            _c("router-link", { attrs: { to: "/", tag: "button" } }, [
-              _vm._v("タスク一覧")
-            ]),
+            _c(
+              "router-link",
+              { staticClass: "button", attrs: { to: "/", tag: "button" } },
+              [_vm._v("タスク一覧")]
+            ),
             _vm._v(" "),
-            _c("router-link", { attrs: { to: "/graph", tag: "button" } }, [
-              _vm._v("グラフ")
-            ]),
-            _vm._v(" "),
-            _c("router-link", { attrs: { to: "/charge", tag: "button" } }, [
-              _vm._v("担当者変更")
-            ])
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "card-header" },
-          [
-            _c("pie-chart", {
-              attrs: {
-                data: _vm.chartData,
-                colors: _vm.colors,
-                download: "graph"
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          [
-            _vm._v("\n                満足度は："),
-            _c("star-rating", {
-              attrs: { "star-size": 30 },
-              on: { "rating-selected": _vm.setRating },
-              model: {
-                value: _vm.rating,
-                callback: function($$v) {
-                  _vm.rating = $$v
-                },
-                expression: "rating"
-              }
-            })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("button", { on: { click: _vm.openModal } }, [_vm._v("完成")]),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            directives: [
+            _c(
+              "router-link",
               {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.showContent,
-                expression: "showContent"
-              }
+                staticClass: "button sbutton",
+                attrs: { to: "/graph", tag: "button" }
+              },
+              [_vm._v("グラフ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "button",
+                attrs: { to: "/charge", tag: "button" }
+              },
+              [_vm._v("担当者変更")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel" }, [
+          _c(
+            "div",
+            { staticClass: "card-header" },
+            [
+              _c("pie-chart", {
+                attrs: {
+                  data: _vm.chartData,
+                  colors: _vm.colors,
+                  download: "graph"
+                }
+              })
             ],
-            attrs: { id: "overlay" }
-          },
-          [
-            _c("div", { attrs: { id: "mordal" } }, [
-              _c("p", [_vm._v("これがモーダルウィンドウです。")]),
-              _vm._v(" "),
-              _c("p", [
-                _c("button", { on: { click: _vm.closeModal } }, [
-                  _vm._v("close")
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            [
+              _vm._v("\n                    満足度は："),
+              _c("star-rating", {
+                staticClass: "star-rating",
+                attrs: { "star-size": 30 },
+                on: { "rating-selected": _vm.setRating },
+                model: {
+                  value: _vm.rating,
+                  callback: function($$v) {
+                    _vm.rating = $$v
+                  },
+                  expression: "rating"
+                }
+              }),
+              _c("br")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("button", { on: { click: _vm.openModal } }, [
+            _vm._v("これで完成！")
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showContent,
+                  expression: "showContent"
+                }
+              ],
+              attrs: { id: "overlay" }
+            },
+            [
+              _c("div", { attrs: { id: "mordal" } }, [
+                _c("p", [
+                  _c(
+                    "button",
+                    {
+                      staticStyle: { float: "left" },
+                      on: { click: _vm.closeModal }
+                    },
+                    [_vm._v("戻る")]
+                  )
+                ]),
+                _c("br"),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v("お疲れ様です！以下の内容でツイートしますか？")
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.text,
+                        expression: "text"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: {
+                      resize: "none",
+                      "background-color": "cornsilk",
+                      color: "#333",
+                      "font-size": "14px"
+                    },
+                    attrs: { type: "text", cols: "40", rows: "10" },
+                    domProps: { value: _vm.text },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.text = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.errors.text
+                    ? _c("div", {
+                        staticClass: "text-danger",
+                        domProps: { textContent: _vm._s(_vm.errors.text) }
+                      })
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { type: "file", accept: "image/*" },
+                    on: { change: _vm.onFileChange }
+                  }),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("label", [_vm._v("ダウンロードしたグラフを追加できます")]),
+                  _c("br"),
+                  _vm._v(" "),
+                  _vm.errors.image
+                    ? _c("div", {
+                        staticClass: "text-danger",
+                        domProps: { textContent: _vm._s(_vm.errors.image) }
+                      })
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c(
+                    "button",
+                    {
+                      staticStyle: { float: "left" },
+                      on: { click: _vm.finishGraph }
+                    },
+                    [_vm._v("ツイートせず1回目の仕分けを完了")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "tweet",
+                      staticStyle: { float: "right", "text-align": "center" },
+                      on: { click: _vm.postTwitter }
+                    },
+                    [_vm._v("ツイートして1回目の仕分けを完了")]
+                  )
                 ])
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Graph2.vue?vue&type=template&id=222dc96d&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Graph2.vue?vue&type=template&id=222dc96d& ***!
+  \****************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c(
+          "div",
+          { staticClass: "panel toppanel", staticStyle: { padding: "5px" } },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "button",
+                attrs: { to: "/", tag: "button" },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.setPartFalse($event)
+                  }
+                }
+              },
+              [_vm._v("<<1回目に戻る")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "panel toppanel" },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "button",
+                attrs: { to: "/Tasks2", tag: "button" }
+              },
+              [_vm._v("タスク一覧")]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "button sbutton",
+                attrs: { to: "/graph2", tag: "button" }
+              },
+              [_vm._v("グラフ")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel" }, [
+          _c(
+            "ul",
+            {
+              staticClass: "tab",
+              staticStyle: { "justify-content": "center" }
+            },
+            [
+              _c(
+                "li",
+                {
+                  staticClass: "tab__item",
+                  class: { "tab__item--active": _vm.tab === 1 },
+                  on: {
+                    click: function($event) {
+                      _vm.tab = 1
+                    }
+                  }
+                },
+                [_vm._v("1回目のグラフ")]
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                {
+                  staticClass: "tab__item",
+                  class: { "tab__item--active": _vm.tab === 2 },
+                  on: {
+                    click: function($event) {
+                      _vm.tab = 2
+                    }
+                  }
+                },
+                [_vm._v("2回目のグラフ")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.tab === 1,
+                  expression: "tab === 1"
+                }
+              ],
+              staticClass: "card-header"
+            },
+            [
+              _c("pie-chart", {
+                attrs: {
+                  data: _vm.chartData,
+                  colors: _vm.colors,
+                  download: "graph"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                [
+                  _vm._v("\n                    1回目の満足度は："),
+                  _c("star-rating", {
+                    staticClass: "star-rating",
+                    attrs: { "star-size": 30, "read-only": true },
+                    on: { "rating-selected": _vm.setRating },
+                    model: {
+                      value: _vm.rating,
+                      callback: function($$v) {
+                        _vm.rating = $$v
+                      },
+                      expression: "rating"
+                    }
+                  }),
+                  _c("br")
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.tab === 2,
+                  expression: "tab === 2"
+                }
+              ],
+              staticClass: "card-header"
+            },
+            [
+              _c("pie-chart", {
+                attrs: {
+                  data: _vm.chartData2,
+                  colors: _vm.colors,
+                  download: "graph2"
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "div",
+                [
+                  _vm._v("\n                    2回目の満足度は："),
+                  _c("star-rating", {
+                    staticClass: "star-rating",
+                    attrs: { "star-size": 30 },
+                    on: { "rating-selected": _vm.setRating2 },
+                    model: {
+                      value: _vm.rating2,
+                      callback: function($$v) {
+                        _vm.rating2 = $$v
+                      },
+                      expression: "rating2"
+                    }
+                  }),
+                  _c("br")
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("button", { on: { click: _vm.openModal } }, [
+                _vm._v("これで完成！")
               ]),
               _vm._v(" "),
-              _c("img", { attrs: { src: "graph" } })
-            ])
-          ]
-        )
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.showContent,
+                      expression: "showContent"
+                    }
+                  ],
+                  attrs: { id: "overlay" }
+                },
+                [
+                  _c("div", { attrs: { id: "mordal" } }, [
+                    _c("p", [
+                      _c(
+                        "button",
+                        {
+                          staticStyle: { float: "left" },
+                          on: { click: _vm.closeModal }
+                        },
+                        [_vm._v("戻る")]
+                      )
+                    ]),
+                    _c("br"),
+                    _vm._v(" "),
+                    _c("p", [
+                      _vm._v("お疲れ様です！以下の内容でツイートしますか？")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.text,
+                            expression: "text"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        staticStyle: {
+                          resize: "none",
+                          "background-color": "cornsilk",
+                          color: "#333",
+                          "font-size": "14px"
+                        },
+                        attrs: { type: "text", cols: "40", rows: "10" },
+                        domProps: { value: _vm.text },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.text = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.text
+                        ? _c("div", {
+                            staticClass: "text-danger",
+                            domProps: { textContent: _vm._s(_vm.errors.text) }
+                          })
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: { type: "file", accept: "image/*" },
+                        on: { change: _vm.onFileChange }
+                      }),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("label", [
+                        _vm._v("ダウンロードしたグラフを追加できます")
+                      ]),
+                      _c("br"),
+                      _vm._v(" "),
+                      _vm.errors.image
+                        ? _c("div", {
+                            staticClass: "text-danger",
+                            domProps: { textContent: _vm._s(_vm.errors.image) }
+                          })
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _c(
+                        "button",
+                        {
+                          staticStyle: { float: "left" },
+                          on: { click: _vm.finishGraph }
+                        },
+                        [_vm._v("ツイートせず完了")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "tweet",
+                          staticStyle: {
+                            float: "right",
+                            "text-align": "center"
+                          },
+                          on: { click: _vm.postTwitter }
+                        },
+                        [_vm._v("ツイートして完了")]
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ],
+            1
+          )
+        ])
       ])
     ])
   ])
@@ -59772,227 +60648,433 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-8" },
-        [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c(
+          "div",
+          { staticClass: "panel toppanel" },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "button sbutton",
+                attrs: { to: "/", tag: "button" }
+              },
+              [_vm._v("タスク一覧")]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              { staticClass: "button", attrs: { to: "/graph", tag: "button" } },
+              [_vm._v("グラフ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "button",
+                attrs: { to: "/charge", tag: "button" }
+              },
+              [_vm._v("担当者変更")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel table-responsive" }, [
           _c(
-            "div",
+            "table",
+            { staticClass: "table-striped", attrs: { align: "center" } },
             [
-              _c("router-link", { attrs: { to: "/", tag: "button" } }, [
-                _vm._v("タスク一覧")
-              ]),
+              _vm._m(0),
               _vm._v(" "),
-              _c("router-link", { attrs: { to: "/graph", tag: "button" } }, [
-                _vm._v("グラフ")
-              ]),
+              _vm._l(_vm.tasks, function(task) {
+                return _c("tr", { staticClass: "card" }, [
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: task.task,
+                          expression: "task.task"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: { width: "100px" },
+                      attrs: { type: "text", id: "task" },
+                      domProps: { value: task.task },
+                      on: {
+                        blur: function($event) {
+                          return _vm.updateTask(task.id)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(task, "task", $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: task.howlong,
+                          expression: "task.howlong"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      staticStyle: { width: "40px" },
+                      attrs: { type: "howlong", id: "howlong" },
+                      domProps: { value: task.howlong },
+                      on: {
+                        blur: function($event) {
+                          return _vm.updateHowlong(task.id)
+                        },
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(task, "howlong", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v("分")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: task.howtimes,
+                            expression: "task.howtimes"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          blur: function($event) {
+                            return _vm.updateHowtimes(task.id)
+                          },
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              task,
+                              "howtimes",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.times, function(time) {
+                        return _c("option", [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(time) +
+                              "\n                            "
+                          )
+                        ])
+                      }),
+                      0
+                    ),
+                    _vm._v("回")
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: task.charge,
+                            expression: "task.charge"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          blur: function($event) {
+                            return _vm.updateCharge(task.id)
+                          },
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              task,
+                              "charge",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.charges, function(charge) {
+                        return _c("option", [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(charge.charge) +
+                              "\n                            "
+                          )
+                        ])
+                      }),
+                      0
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.deleteTask(task.id)
+                          }
+                        }
+                      },
+                      [_vm._v("Delete")]
+                    )
+                  ])
+                ])
+              }),
               _vm._v(" "),
-              _c("router-link", { attrs: { to: "/charge", tag: "button" } }, [
-                _vm._v("担当者変更")
+              _c("tr", [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.taskForm.task,
+                      expression: "taskForm.task"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  staticStyle: { width: "100px" },
+                  attrs: {
+                    type: "text",
+                    id: "inputtask",
+                    placeholder: "新規タスクを追加"
+                  },
+                  domProps: { value: _vm.taskForm.task },
+                  on: {
+                    blur: _vm.addTask,
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.taskForm, "task", $event.target.value)
+                    }
+                  }
+                })
               ])
             ],
-            1
-          ),
-          _vm._v(
-            "\n            タスク名　１回あたりの時間　週に何回　担当者\n            "
-          ),
-          _vm._l(_vm.tasks, function(task) {
-            return _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: task.task,
-                      expression: "task.task"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text", id: "task" },
-                  domProps: { value: task.task },
-                  on: {
-                    blur: function($event) {
-                      return _vm.updateTask(task.id)
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(task, "task", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: task.howlong,
-                      expression: "task.howlong"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "howlong", id: "howlong" },
-                  domProps: { value: task.howlong },
-                  on: {
-                    blur: function($event) {
-                      return _vm.updateHowlong(task.id)
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(task, "howlong", $event.target.value)
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: task.howtimes,
-                        expression: "task.howtimes"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    on: {
-                      blur: function($event) {
-                        return _vm.updateHowtimes(task.id)
-                      },
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          task,
-                          "howtimes",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  _vm._l(_vm.times, function(time) {
-                    return _c("option", [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(time) +
-                          "\n                        "
-                      )
-                    ])
-                  }),
-                  0
-                ),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: task.charge,
-                        expression: "task.charge"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    on: {
-                      blur: function($event) {
-                        return _vm.updateCharge(task.id)
-                      },
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.$set(
-                          task,
-                          "charge",
-                          $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        )
-                      }
-                    }
-                  },
-                  _vm._l(_vm.charges, function(charge) {
-                    return _c("option", [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(charge.charge) +
-                          "\n                        "
-                      )
-                    ])
-                  }),
-                  0
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.deleteTask(task.id)
-                      }
-                    }
-                  },
-                  [_vm._v("Delete")]
-                )
-              ])
-            ])
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "form-group" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.taskForm.task,
-                    expression: "taskForm.task"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "text", id: "inputtask" },
-                domProps: { value: _vm.taskForm.task },
-                on: {
-                  blur: _vm.addTask,
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.taskForm, "task", $event.target.value)
-                  }
-                }
-              })
-            ])
-          ])
-        ],
-        2
-      )
+            2
+          )
+        ])
+      ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("タスク名")]),
+      _c("td", [_vm._v("1回/分")]),
+      _c("td", [_vm._v("1週間/回")]),
+      _c("td", [_vm._v("担当")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Tasks2.vue?vue&type=template&id=0978772d&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/Tasks2.vue?vue&type=template&id=0978772d& ***!
+  \****************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c(
+          "div",
+          { staticClass: "panel toppanel", staticStyle: { padding: "5px" } },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "button",
+                attrs: { to: "/", tag: "button" },
+                nativeOn: {
+                  click: function($event) {
+                    return _vm.setPartFalse($event)
+                  }
+                }
+              },
+              [_vm._v("<<1回目に戻る")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "panel toppanel" },
+          [
+            _c(
+              "router-link",
+              {
+                staticClass: "button sbutton",
+                attrs: { to: "/Tasks2", tag: "button" }
+              },
+              [_vm._v("タスク一覧")]
+            ),
+            _vm._v(" "),
+            _c(
+              "router-link",
+              {
+                staticClass: "button",
+                attrs: { to: "/graph2", tag: "button" }
+              },
+              [_vm._v("グラフ")]
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel table-responsive" }, [
+          _c(
+            "table",
+            { staticClass: "table-striped", attrs: { align: "center" } },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._l(_vm.tasks, function(task) {
+                return _c("tr", { staticClass: "card" }, [
+                  _c("td", [_vm._v(_vm._s(task.task))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(task.howlong) + "分")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(task.howtimes) + "回")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(task.charge))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("⇒")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "select",
+                      {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: task.charge2,
+                            expression: "task.charge2"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        on: {
+                          blur: function($event) {
+                            return _vm.updateCharge2(task.id)
+                          },
+                          change: function($event) {
+                            var $$selectedVal = Array.prototype.filter
+                              .call($event.target.options, function(o) {
+                                return o.selected
+                              })
+                              .map(function(o) {
+                                var val = "_value" in o ? o._value : o.value
+                                return val
+                              })
+                            _vm.$set(
+                              task,
+                              "charge2",
+                              $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            )
+                          }
+                        }
+                      },
+                      _vm._l(_vm.charges, function(charge) {
+                        return _c("option", [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(charge.charge) +
+                              "\n                            "
+                          )
+                        ])
+                      }),
+                      0
+                    )
+                  ])
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", [_vm._v("タスク名")]),
+      _c("td", [_vm._v("1回/分")]),
+      _c("td", [_vm._v("1週間/回")]),
+      _c("td", [_vm._v("担当者")]),
+      _c("td"),
+      _c("td", [_vm._v("担当2")])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -76303,7 +77385,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
  * building robust, powerful web applications using Vue and Laravel.
  */
 //window.axios = require('axios');
-//require('./bootstrap');
+
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
  // ルーティングの定義をインポートする
@@ -76823,6 +77906,93 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/Graph2.vue":
+/*!***************************************!*\
+  !*** ./resources/js/pages/Graph2.vue ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Graph2_vue_vue_type_template_id_222dc96d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Graph2.vue?vue&type=template&id=222dc96d& */ "./resources/js/pages/Graph2.vue?vue&type=template&id=222dc96d&");
+/* harmony import */ var _Graph2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Graph2.vue?vue&type=script&lang=js& */ "./resources/js/pages/Graph2.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Graph2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Graph2.vue?vue&type=style&index=0&lang=css& */ "./resources/js/pages/Graph2.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Graph2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Graph2_vue_vue_type_template_id_222dc96d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Graph2_vue_vue_type_template_id_222dc96d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/Graph2.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/Graph2.vue?vue&type=script&lang=js&":
+/*!****************************************************************!*\
+  !*** ./resources/js/pages/Graph2.vue?vue&type=script&lang=js& ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Graph2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Graph2.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Graph2.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Graph2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/Graph2.vue?vue&type=style&index=0&lang=css&":
+/*!************************************************************************!*\
+  !*** ./resources/js/pages/Graph2.vue?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Graph2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./Graph2.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Graph2.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Graph2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Graph2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Graph2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Graph2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Graph2_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/Graph2.vue?vue&type=template&id=222dc96d&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/pages/Graph2.vue?vue&type=template&id=222dc96d& ***!
+  \**********************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Graph2_vue_vue_type_template_id_222dc96d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Graph2.vue?vue&type=template&id=222dc96d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Graph2.vue?vue&type=template&id=222dc96d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Graph2_vue_vue_type_template_id_222dc96d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Graph2_vue_vue_type_template_id_222dc96d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/Login.vue":
 /*!**************************************!*\
   !*** ./resources/js/pages/Login.vue ***!
@@ -76956,6 +78126,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks_vue_vue_type_template_id_a48e6656___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks_vue_vue_type_template_id_a48e6656___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/Tasks2.vue":
+/*!***************************************!*\
+  !*** ./resources/js/pages/Tasks2.vue ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Tasks2_vue_vue_type_template_id_0978772d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Tasks2.vue?vue&type=template&id=0978772d& */ "./resources/js/pages/Tasks2.vue?vue&type=template&id=0978772d&");
+/* harmony import */ var _Tasks2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Tasks2.vue?vue&type=script&lang=js& */ "./resources/js/pages/Tasks2.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Tasks2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Tasks2_vue_vue_type_template_id_0978772d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Tasks2_vue_vue_type_template_id_0978772d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/Tasks2.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/Tasks2.vue?vue&type=script&lang=js&":
+/*!****************************************************************!*\
+  !*** ./resources/js/pages/Tasks2.vue?vue&type=script&lang=js& ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Tasks2.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Tasks2.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks2_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/Tasks2.vue?vue&type=template&id=0978772d&":
+/*!**********************************************************************!*\
+  !*** ./resources/js/pages/Tasks2.vue?vue&type=template&id=0978772d& ***!
+  \**********************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks2_vue_vue_type_template_id_0978772d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Tasks2.vue?vue&type=template&id=0978772d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/Tasks2.vue?vue&type=template&id=0978772d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks2_vue_vue_type_template_id_0978772d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Tasks2_vue_vue_type_template_id_0978772d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -77096,14 +78335,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var _pages_Tasks_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/Tasks.vue */ "./resources/js/pages/Tasks.vue");
-/* harmony import */ var _pages_Login_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Login.vue */ "./resources/js/pages/Login.vue");
-/* harmony import */ var _pages_Charge_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/Charge.vue */ "./resources/js/pages/Charge.vue");
-/* harmony import */ var _pages_Graph_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Graph.vue */ "./resources/js/pages/Graph.vue");
-/* harmony import */ var _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/errors/System.vue */ "./resources/js/pages/errors/System.vue");
-/* harmony import */ var _pages_oauth_twitter_Redirect_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/oauth/twitter/Redirect.vue */ "./resources/js/pages/oauth/twitter/Redirect.vue");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _pages_Tasks2_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/Tasks2.vue */ "./resources/js/pages/Tasks2.vue");
+/* harmony import */ var _pages_Login_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/Login.vue */ "./resources/js/pages/Login.vue");
+/* harmony import */ var _pages_Charge_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/Charge.vue */ "./resources/js/pages/Charge.vue");
+/* harmony import */ var _pages_Graph_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/Graph.vue */ "./resources/js/pages/Graph.vue");
+/* harmony import */ var _pages_Graph2_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/Graph2.vue */ "./resources/js/pages/Graph2.vue");
+/* harmony import */ var _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/errors/System.vue */ "./resources/js/pages/errors/System.vue");
+/* harmony import */ var _pages_oauth_twitter_Redirect_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/oauth/twitter/Redirect.vue */ "./resources/js/pages/oauth/twitter/Redirect.vue");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 
  // ページコンポーネントをインポートする
+
+
 
 
 
@@ -77121,9 +78364,9 @@ var routes = [{
   component: _pages_Tasks_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
 }, {
   path: '/login',
-  component: _pages_Login_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+  component: _pages_Login_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
   beforeEnter: function beforeEnter(to, from, next) {
-    if (_store__WEBPACK_IMPORTED_MODULE_8__["default"].getters['auth/check']) {
+    if (_store__WEBPACK_IMPORTED_MODULE_10__["default"].getters['auth/check']) {
       next('/');
     } else {
       next();
@@ -77131,16 +78374,23 @@ var routes = [{
   }
 }, {
   path: '/500',
-  component: _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+  component: _pages_errors_System_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, {
   path: '/oauth/twitter',
-  component: _pages_oauth_twitter_Redirect_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _pages_oauth_twitter_Redirect_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
   path: '/charge',
-  component: _pages_Charge_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+  component: _pages_Charge_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
   path: '/graph',
-  component: _pages_Graph_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+  component: _pages_Graph_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+  name: 'VueChartKick'
+}, {
+  path: '/Tasks2',
+  component: _pages_Tasks2_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+}, {
+  path: '/graph2',
+  component: _pages_Graph2_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
   name: 'VueChartKick'
 }]; // VueRouterインスタンスを作成する
 
@@ -77189,6 +78439,9 @@ var getters = {
   },
   username: function username(state) {
     return state.user ? state.user.name : '';
+  },
+  part: function part(state) {
+    return state.user ? state.user.part : '';
   }
 };
 var mutations = {
@@ -77205,17 +78458,7 @@ var mutations = {
     state.registerErrorMessages = messages;
   },
   setToken: function setToken(state, token) {
-    state.token = token; // Store token in cookies
-
-    if (inBrowser) {
-      if (token) {
-        js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.set('token', token, {
-          expires: 30
-        });
-      } else {
-        js_cookie__WEBPACK_IMPORTED_MODULE_2___default.a.remove('token');
-      }
-    }
+    state.token = token;
   }
 };
 var actions = {
@@ -77677,23 +78920,23 @@ var actions = {
 
     return updateCharge;
   }(),
-  //担当一覧を取得
-  getCharge: function () {
-    var _getCharge = _asyncToGenerator(
+  //担当2を更新
+  updateCharge2: function () {
+    var _updateCharge2 = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(context) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11(context, data) {
       var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
         while (1) {
           switch (_context11.prev = _context11.next) {
             case 0:
               context.commit('setApiStatus', null);
-              _context11.next = 3;
-              return axios.get('/api/charge');
+              console.log(data);
+              _context11.next = 4;
+              return axios.put('/api/task/' + data.id + '/charge2/' + data.charge2);
 
-            case 3:
+            case 4:
               response = _context11.sent;
-              console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
                 _context11.next = 8;
@@ -77717,84 +78960,37 @@ var actions = {
       }, _callee11);
     }));
 
-    function getCharge(_x18) {
-      return _getCharge.apply(this, arguments);
+    function updateCharge2(_x18, _x19) {
+      return _updateCharge2.apply(this, arguments);
     }
 
-    return getCharge;
+    return updateCharge2;
   }(),
-  //担当一覧の担当を更新
-  updateChargeList: function () {
-    var _updateChargeList = _asyncToGenerator(
+  //担当一覧を取得
+  getCharge: function () {
+    var _getCharge = _asyncToGenerator(
     /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(context, data) {
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12(context) {
       var response;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee12$(_context12) {
         while (1) {
           switch (_context12.prev = _context12.next) {
             case 0:
               context.commit('setApiStatus', null);
-              console.log(data);
-              _context12.next = 4;
-              return axios.put('/api/charge/' + data.charge_id + '/' + data.charge);
+              _context12.next = 3;
+              return axios.get('/api/charge');
 
-            case 4:
+            case 3:
               response = _context12.sent;
               console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context12.next = 9;
+                _context12.next = 8;
                 break;
               }
 
               context.commit('setApiStatus', true);
               return _context12.abrupt("return", response.data);
-
-            case 9:
-              context.commit('setApiStatus', false);
-              context.commit('error/setCode', response.status, {
-                root: true
-              });
-
-            case 11:
-            case "end":
-              return _context12.stop();
-          }
-        }
-      }, _callee12);
-    }));
-
-    function updateChargeList(_x19, _x20) {
-      return _updateChargeList.apply(this, arguments);
-    }
-
-    return updateChargeList;
-  }(),
-  //グラフデータを取得
-  getGraph: function () {
-    var _getGraph = _asyncToGenerator(
-    /*#__PURE__*/
-    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(context) {
-      var response;
-      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
-        while (1) {
-          switch (_context13.prev = _context13.next) {
-            case 0:
-              context.commit('setApiStatus', null);
-              _context13.next = 3;
-              return axios.get('/api/getgraph');
-
-            case 3:
-              response = _context13.sent;
-              console.log(response.data);
-
-              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context13.next = 8;
-                break;
-              }
-
-              context.commit('setApiStatus', true);
-              return _context13.abrupt("return", response.data);
 
             case 8:
               context.commit('setApiStatus', false);
@@ -77804,17 +79000,606 @@ var actions = {
 
             case 10:
             case "end":
+              return _context12.stop();
+          }
+        }
+      }, _callee12);
+    }));
+
+    function getCharge(_x20) {
+      return _getCharge.apply(this, arguments);
+    }
+
+    return getCharge;
+  }(),
+  //担当一覧の担当を更新
+  updateChargeList: function () {
+    var _updateChargeList = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee13(context, data) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee13$(_context13) {
+        while (1) {
+          switch (_context13.prev = _context13.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              console.log(data);
+              _context13.next = 4;
+              return axios.put('/api/charge/' + data.charge_id + '/' + data.charge);
+
+            case 4:
+              response = _context13.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context13.next = 9;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context13.abrupt("return", response.data);
+
+            case 9:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 11:
+            case "end":
               return _context13.stop();
           }
         }
       }, _callee13);
     }));
 
-    function getGraph(_x21) {
+    function updateChargeList(_x21, _x22) {
+      return _updateChargeList.apply(this, arguments);
+    }
+
+    return updateChargeList;
+  }(),
+  //グラフデータを取得
+  getGraph: function () {
+    var _getGraph = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee14(context) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee14$(_context14) {
+        while (1) {
+          switch (_context14.prev = _context14.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              _context14.next = 3;
+              return axios.get('/api/getgraph');
+
+            case 3:
+              response = _context14.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context14.next = 8;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context14.abrupt("return", response.data);
+
+            case 8:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 10:
+            case "end":
+              return _context14.stop();
+          }
+        }
+      }, _callee14);
+    }));
+
+    function getGraph(_x23) {
       return _getGraph.apply(this, arguments);
     }
 
     return getGraph;
+  }(),
+  //グラフデータ2を取得
+  getGraph2: function () {
+    var _getGraph2 = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee15(context) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee15$(_context15) {
+        while (1) {
+          switch (_context15.prev = _context15.next) {
+            case 0:
+              context.commit('setApiStatus', null);
+              _context15.next = 3;
+              return axios.get('/api/getgraph2');
+
+            case 3:
+              response = _context15.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context15.next = 8;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context15.abrupt("return", response.data);
+
+            case 8:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 10:
+            case "end":
+              return _context15.stop();
+          }
+        }
+      }, _callee15);
+    }));
+
+    function getGraph2(_x24) {
+      return _getGraph2.apply(this, arguments);
+    }
+
+    return getGraph2;
+  }(),
+  //星の数をDBに保存
+  setRating: function () {
+    var _setRating = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee16(context, rating) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee16$(_context16) {
+        while (1) {
+          switch (_context16.prev = _context16.next) {
+            case 0:
+              _context16.next = 2;
+              return axios.post('/api/setRating', rating);
+
+            case 2:
+              response = _context16.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context16.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context16.abrupt("return", response.data);
+
+            case 7:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 9:
+            case "end":
+              return _context16.stop();
+          }
+        }
+      }, _callee16);
+    }));
+
+    function setRating(_x25, _x26) {
+      return _setRating.apply(this, arguments);
+    }
+
+    return setRating;
+  }(),
+  //星の数2をDBに保存
+  setRating2: function () {
+    var _setRating2 = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee17(context, rating2) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee17$(_context17) {
+        while (1) {
+          switch (_context17.prev = _context17.next) {
+            case 0:
+              _context17.next = 2;
+              return axios.post('/api/setRating2', rating2);
+
+            case 2:
+              response = _context17.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context17.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context17.abrupt("return", response.data);
+
+            case 7:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 9:
+            case "end":
+              return _context17.stop();
+          }
+        }
+      }, _callee17);
+    }));
+
+    function setRating2(_x27, _x28) {
+      return _setRating2.apply(this, arguments);
+    }
+
+    return setRating2;
+  }(),
+  //星の数をDBから取得
+  getRating: function () {
+    var _getRating = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee18(context) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee18$(_context18) {
+        while (1) {
+          switch (_context18.prev = _context18.next) {
+            case 0:
+              _context18.next = 2;
+              return axios.get('/api/getRating');
+
+            case 2:
+              response = _context18.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context18.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context18.abrupt("return", response.data);
+
+            case 7:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 9:
+            case "end":
+              return _context18.stop();
+          }
+        }
+      }, _callee18);
+    }));
+
+    function getRating(_x29) {
+      return _getRating.apply(this, arguments);
+    }
+
+    return getRating;
+  }(),
+  //星の数2をDBから取得
+  getRating2: function () {
+    var _getRating2 = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee19(context) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee19$(_context19) {
+        while (1) {
+          switch (_context19.prev = _context19.next) {
+            case 0:
+              _context19.next = 2;
+              return axios.get('/api/getRating2');
+
+            case 2:
+              response = _context19.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context19.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context19.abrupt("return", response.data);
+
+            case 7:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 9:
+            case "end":
+              return _context19.stop();
+          }
+        }
+      }, _callee19);
+    }));
+
+    function getRating2(_x30) {
+      return _getRating2.apply(this, arguments);
+    }
+
+    return getRating2;
+  }(),
+  //テキストを取得
+  getText: function () {
+    var _getText = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee20(context) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee20$(_context20) {
+        while (1) {
+          switch (_context20.prev = _context20.next) {
+            case 0:
+              _context20.next = 2;
+              return axios.get('/api/getText');
+
+            case 2:
+              response = _context20.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context20.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context20.abrupt("return", response.data);
+
+            case 7:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 9:
+            case "end":
+              return _context20.stop();
+          }
+        }
+      }, _callee20);
+    }));
+
+    function getText(_x31) {
+      return _getText.apply(this, arguments);
+    }
+
+    return getText;
+  }(),
+  //テキスト2を取得
+  getText2: function () {
+    var _getText2 = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee21(context) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee21$(_context21) {
+        while (1) {
+          switch (_context21.prev = _context21.next) {
+            case 0:
+              _context21.next = 2;
+              return axios.get('/api/getText2');
+
+            case 2:
+              response = _context21.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context21.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context21.abrupt("return", response.data);
+
+            case 7:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 9:
+            case "end":
+              return _context21.stop();
+          }
+        }
+      }, _callee21);
+    }));
+
+    function getText2(_x32) {
+      return _getText2.apply(this, arguments);
+    }
+
+    return getText2;
+  }(),
+  //Twitterに投稿
+  postTwitter: function () {
+    var _postTwitter = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee22(context, data) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee22$(_context22) {
+        while (1) {
+          switch (_context22.prev = _context22.next) {
+            case 0:
+              _context22.next = 2;
+              return axios.post('/api/postTwitter', data);
+
+            case 2:
+              response = _context22.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context22.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context22.abrupt("return", response.data);
+
+            case 7:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 9:
+            case "end":
+              return _context22.stop();
+          }
+        }
+      }, _callee22);
+    }));
+
+    function postTwitter(_x33, _x34) {
+      return _postTwitter.apply(this, arguments);
+    }
+
+    return postTwitter;
+  }(),
+  //２回目に設定
+  setPart: function () {
+    var _setPart = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee23(context) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee23$(_context23) {
+        while (1) {
+          switch (_context23.prev = _context23.next) {
+            case 0:
+              _context23.next = 2;
+              return axios.post('/api/setPart');
+
+            case 2:
+              response = _context23.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context23.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context23.abrupt("return", response.data);
+
+            case 7:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 9:
+            case "end":
+              return _context23.stop();
+          }
+        }
+      }, _callee23);
+    }));
+
+    function setPart(_x35) {
+      return _setPart.apply(this, arguments);
+    }
+
+    return setPart;
+  }(),
+  //Part情報を取得
+  getPart: function () {
+    var _getPart = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee24(context) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee24$(_context24) {
+        while (1) {
+          switch (_context24.prev = _context24.next) {
+            case 0:
+              _context24.next = 2;
+              return axios.get('/api/getPart');
+
+            case 2:
+              response = _context24.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context24.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context24.abrupt("return", response.data);
+
+            case 7:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 9:
+            case "end":
+              return _context24.stop();
+          }
+        }
+      }, _callee24);
+    }));
+
+    function getPart(_x36) {
+      return _getPart.apply(this, arguments);
+    }
+
+    return getPart;
+  }(),
+  //Partを１回目に設定
+  setPartFalse: function () {
+    var _setPartFalse = _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee25(context) {
+      var response;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee25$(_context25) {
+        while (1) {
+          switch (_context25.prev = _context25.next) {
+            case 0:
+              _context25.next = 2;
+              return axios.post('/api/setPartFalse');
+
+            case 2:
+              response = _context25.sent;
+              console.log(response.data);
+
+              if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
+                _context25.next = 7;
+                break;
+              }
+
+              context.commit('setApiStatus', true);
+              return _context25.abrupt("return", response.data);
+
+            case 7:
+              context.commit('setApiStatus', false);
+              context.commit('error/setCode', response.status, {
+                root: true
+              });
+
+            case 9:
+            case "end":
+              return _context25.stop();
+          }
+        }
+      }, _callee25);
+    }));
+
+    function setPartFalse(_x37) {
+      return _setPartFalse.apply(this, arguments);
+    }
+
+    return setPartFalse;
   }()
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

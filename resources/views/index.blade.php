@@ -25,3 +25,26 @@
   <div id="app"></div>
 </body>
 </html>
+
+<style>
+  html{
+    background-color: antiquewhite;
+}
+.navbar{
+    background-color:lightpink;
+}
+input,select{
+  background-color:ivory;
+}
+.panel{
+  text-align:center;
+}
+.sbutton{
+  background-color:lightskyblue;
+  color:#555;
+}
+.star-rating{
+  justify-content:center;
+  display:flex;
+}
+</style>

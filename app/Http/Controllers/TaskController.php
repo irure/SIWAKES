@@ -56,4 +56,81 @@ class TaskController extends Controller
         $task->save();
         return response("OK", 200);
     }
+    
+    public function chargeUpdate2(Request $request,$id){
+        $task = Task::find($id);
+        $task->charge2 = $request->charge2;
+        $task->save();
+        return response("OK", 200);
+    }
+    
+    public function setRating(Request $request){
+        $user = Auth::user();
+        $user->rating = $request->rating;
+        $user->save();
+        return response("OK", 200);
+    }
+    
+    public function setRating2(Request $request){
+        $user = Auth::user();
+        $user->rating2 = $request->rating2;
+        $user->save();
+        return response("OK", 200);
+    }
+    
+    public function getRating(){
+        $user = Auth::user();
+        return $user->rating;
+    }
+    
+    public function getRating2(){
+        $user = Auth::user();
+        return $user->rating2;
+    }
+    
+    public function getText(){
+        $user = Auth::user();
+        $text = '仕分けを完了しました！満足度は'.str_repeat('★',$user->rating).str_repeat('☆',5-$user->rating).'でした！(link:SIWAKES)';
+        return $text;
+    }
+    
+    public function getText2(){
+        $user = Auth::user();
+        $text = '2回目の仕分けを完了しました！満足度は'.str_repeat('★',$user->rating).str_repeat('☆',5-$user->rating).'から'.
+        str_repeat('★',$user->rating2).str_repeat('☆',5-$user->rating2).'になりました！(link:SIWAKES)';
+        return $text;
+    }
+    
+    public function setPart(){
+        $user = Auth::user();
+        $user->part=1;
+        $user->save();
+        
+        $and=true;
+        $user_id = $user->id;
+        
+        $userCharges = Task::when($and, function($q) use($user_id){
+            $q->where('user_id', $user_id)
+            ;})->get();
+        
+        foreach ($userCharges as $userCharge) {
+            $userCharge->charge2 = $userCharge->charge;
+            $userCharge->save();
+        }
+        
+        return response("OK", 200);
+    }
+    
+    public function setPartFalse(){
+        $user = Auth::user();
+        $user->part=0;
+        //return $user;
+        $user->save();
+        return response("OK", 200);
+    }
+    
+    public function getPart(){
+        $user = Auth::user();
+        return $user->part;
+    }
 }

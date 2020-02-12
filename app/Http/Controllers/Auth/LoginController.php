@@ -66,6 +66,7 @@ class LoginController extends Controller
            return redirect()->route('/')->withErrors('ユーザー情報の取得に失敗しました。');
        }
        
+       
        //ユーザーホームのURL
         $screen_name = $userSocial->getNickname();     //ユーザー名
         $url = "https://twitter.com/".$screen_name;
@@ -82,13 +83,12 @@ class LoginController extends Controller
         $searchavatar=new User;
         $searchavatar->avatar = $res;
        
-       //メールアドレスで登録状況を調べる
+       //avatarで登録状況を調べる
        $user = User::where(['avatar' => $res])->first();
       
        //メールアドレス登録の有無で条件分岐
        if($user){
-           //email登録がある場合の処理
-           //twitter id　が変更されている場合、DBアップデード
+           //twitter idが変更されている場合、DBアップデード
            if($user->twitter_id  !== $userSocial->getNickname()){
                $user->twitter_id = $userSocial->getNickname();
                $user->save();
@@ -104,6 +104,12 @@ class LoginController extends Controller
            $newuser->email = $userSocial->getEmail();
            $newuser->twitter_id = $userSocial->getNickname();
            $newuser->avatar = $searchavatar->avatar;
+           $newuser->rating=0;$newuser->rating2=0;
+           $newuser->part=0;
+           
+           $newuser->oauth_token = $userSocial->token;
+           $newuser->oauth_token_secret = $userSocial->tokenSecret;
+           
            
            //ユーザ作成     
            $newuser->save();

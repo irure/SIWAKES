@@ -21,6 +21,11 @@ class CreateUsersTable extends Migration
             $table->string('password')->nullable();
             $table->string('avatar')->nullable()->unique();
             $table->string('twitter_id')->nullable()->unique();
+            $table->string('oauth_token')->nullable();
+            $table->string('oauth_token_secret')->nullable();
+            $table->integer('part')->nullable();
+            $table->integer('rating')->nullable();
+            $table->integer('rating2')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

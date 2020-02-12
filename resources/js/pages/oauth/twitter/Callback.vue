@@ -52,9 +52,7 @@ export default {
       //authストアでtokenをstateにset
       await this.$store.dispatch('auth/twlogin', callbackData)
       
-      
-      
-      this.$router.replace('/oauth/twitter/twcallback')
+      this.$router.replace('/')
     } catch (error) {
       this.failedMessage = error.message
     }

@@ -6,7 +6,7 @@ import './bootstrap'
  */
 //window.axios = require('axios');
 
-//require('./bootstrap');
+require('./bootstrap');
 
 window.Vue = require('vue');
 
@@ -62,10 +62,10 @@ const createApp = async () =>{
             text: '',
         },
         validations: {
-        text: {
-            required
-        }
-},
+            text: {
+                required
+            }
+        },
     })
 };
 

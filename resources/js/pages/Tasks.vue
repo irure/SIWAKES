@@ -2,32 +2,35 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div>
-                    <router-link to="/" tag="button">タスク一覧</router-link>
-                    <router-link to="/graph" tag="button">グラフ</router-link>
-                    <router-link to="/charge" tag="button">担当者変更</router-link>
+                <div class="panel toppanel">
+                    <router-link to="/" tag="button"class="button sbutton">タスク一覧</router-link>
+                    <router-link to="/graph" tag="button"class="button">グラフ</router-link>
+                    <router-link to="/charge" tag="button"class="button">担当者変更</router-link>
                 </div>
-                タスク名　１回あたりの時間　週に何回　担当者
-                <div class="card" v-for="task in tasks">
-                    <div class="card-header">
-                        <input type="text" class="form-control" id="task" v-model="task.task" @blur="updateTask(task.id)">
-                        <input type="howlong" class="form-control" id="howlong" v-model="task.howlong" @blur="updateHowlong(task.id)">
-                        <select class="form-control" v-model="task.howtimes" @blur="updateHowtimes(task.id)">
-                            <option v-for="time in times">
-                                {{ time }}
-                            </option>
-                        </select>
-                        <select class="form-control" v-model="task.charge" @blur="updateCharge(task.id)">
-                            <option v-for="charge in charges">
-                                {{ charge.charge }}
-                            </option>
-                        </select>
-                        <button type="button" class="btn btn-danger" @click="deleteTask(task.id)">Delete</button>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="inputtask" v-model="taskForm.task" @blur="addTask">
+                <div class="panel table-responsive">
+                    <table class="table-striped" align="center">
+                        <tr>
+                            <td>タスク名</td><td>1回/分</td><td>1週間/回</td><td>担当</td>
+                        </tr>
+                        <tr class="card" v-for="task in tasks">
+                            <td><input type="text" class="form-control" id="task" v-model="task.task" @blur="updateTask(task.id)"style="width:100px;"></td>
+                            <td><input type="howlong" class="form-control" id="howlong" v-model="task.howlong" @blur="updateHowlong(task.id)" style="width:40px;">分</td>
+                            <td><select class="form-control" v-model="task.howtimes" @blur="updateHowtimes(task.id)">
+                                <option v-for="time in times">
+                                    {{ time }}
+                                </option>
+                            </select>回</td>
+                            <td><select class="form-control" v-model="task.charge" @blur="updateCharge(task.id)">
+                                <option v-for="charge in charges">
+                                    {{ charge.charge }}
+                                </option>
+                            </select></td>
+                            <td><button type="button" class="btn btn-danger" @click="deleteTask(task.id)">Delete</button></td>
+                            </tr>
+                            <tr>
+                                <input type="text" class="form-control" id="inputtask" v-model="taskForm.task" @blur="addTask" placeholder="新規タスクを追加" style="width:100px;">
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -92,11 +95,21 @@
                 this.$store.dispatch('auth/getCharge').then((result)=>{
                     this.charges = result
                 })
-            }
+            },
+            getPart(){
+                this.$store.dispatch('auth/getPart').then((result)=>{
+                    if(result){
+                        
+                    }else{
+                        this.part = result
+                    }
+                })
+            },
         },
         mounted() {
             this.getTaskList()
             this.getChargeList()
+            this.getPart()
             console.log('Component mounted.')
         }
     }
