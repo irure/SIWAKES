@@ -15,14 +15,14 @@
                         <li class="tab__item" :class="{'tab__item--active': tab === 2 }" @click="tab = 2">2回目のグラフ</li>
                     </ul>
                     <div class="card-header" v-show="tab === 1">
-                        <pie-chart :data="chartData" :colors ="colors" download = "graph"></pie-chart>
+                        <pie-chart :data="chartData" :colors ="colors" download = "graph" title="1回目" donut=true></pie-chart>
                         <div>
                         1回目の満足度は：<star-rating :star-size="30" v-model="rating" @rating-selected ="setRating" :read-only = true class="star-rating"></star-rating><br>
                         </div>
                     </div>
                     
                     <div class="card-header" v-show="tab === 2">
-                        <pie-chart :data="chartData2" :colors ="colors" download = "graph2"></pie-chart>
+                        <pie-chart :data="chartData2" :colors ="colors" download = "graph2" title="2回目" donut=true></pie-chart>
                         <div>
                         2回目の満足度は：<star-rating :star-size="30" v-model="rating2" @rating-selected ="setRating2" class="star-rating"></star-rating><br>
                         </div>
@@ -33,7 +33,7 @@
                             <p><button v-on:click="closeModal" style="float:left;">戻る</button></p><br>
                             <p>お疲れ様です！以下の内容でツイートしますか？</p>
                             <div class="form-group">
-                                <textarea class="form-control" type="text" v-model="text" cols="40" rows="10" style="resize: none;background-color:cornsilk;color:#333;font-size:14px;"></textarea>
+                                <textarea class="form-control" type="text" v-model="text" cols="40" rows="10" style="resize: none;background-color:floralwhite;color:#333;font-size:14px;"></textarea>
                                 <div class="text-danger" v-if="errors.text" v-text="errors.text"></div>
                             </div>
                             <div class="form-group">
@@ -41,8 +41,7 @@
                                 <label>ダウンロードしたグラフを追加できます</label><br>
                                 <div class="text-danger" v-if="errors.image" v-text="errors.image"></div>
                             </div>
-                        <p><button v-on:click="finishGraph" style="float:left;">ツイートせず完了</button></p>
-                        <p><button v-on:click="postTwitter" style="float:right; text-align:center;"class="tweet">ツイートして完了</button></p>
+                        <p><button v-on:click="postTwitter" style="text-align:center;"class="tweet">ツイートして完了</button></p>
                     </div>
                     </div>
                     
@@ -137,8 +136,9 @@
                 if(this.imageFile)formData.append('image', this.imageFile);
                 
                 this.$store.dispatch('auth/postTwitter',formData)
+                alert("Tweetしました")
                 this.showContent2=true
-                this.$router.replace('/Tasks2')
+                
             },
             getPart(){
                 this.$store.dispatch('auth/getPart').then((result)=>{
@@ -155,11 +155,11 @@
             }
         },
         mounted() {
+            this.getPart()
             this.getGraphData()
             this.getGraphData2()
             this.getRating()
             this.getRating2()
-            this.getPart()
             console.log('Component mounted.')
         }
     }
@@ -185,10 +185,10 @@
 
 #mordal{
   z-index:2;
-  width:70%;
+  width:500px;
   padding: 1em;
   background:cornsilk;
-  
+  border-radius:6px;
 }
 .tweet{
     background-color:#2795e9;

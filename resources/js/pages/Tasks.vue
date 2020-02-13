@@ -13,8 +13,8 @@
                             <td>タスク名</td><td>1回/分</td><td>1週間/回</td><td>担当</td>
                         </tr>
                         <tr class="card" v-for="task in tasks">
-                            <td><input type="text" class="form-control" id="task" v-model="task.task" @blur="updateTask(task.id)"style="width:100px;"></td>
-                            <td><input type="howlong" class="form-control" id="howlong" v-model="task.howlong" @blur="updateHowlong(task.id)" style="width:40px;">分</td>
+                            <td><input type="text" class="form-control" id="task" v-model="task.task" @blur="updateTask(task.id)"style="width:8em;"></td>
+                            <td><input type="howlong" class="form-control" id="howlong" v-model="task.howlong" @blur="updateHowlong(task.id)" style="width:4em;">分</td>
                             <td><select class="form-control" v-model="task.howtimes" @blur="updateHowtimes(task.id)">
                                 <option v-for="time in times">
                                     {{ time }}
@@ -28,7 +28,7 @@
                             <td><button type="button" class="btn btn-danger" @click="deleteTask(task.id)">Delete</button></td>
                             </tr>
                             <tr>
-                                <input type="text" class="form-control" id="inputtask" v-model="taskForm.task" @blur="addTask" placeholder="新規タスクを追加" style="width:100px;">
+                                <input type="text" class="form-control" id="inputtask" v-model="taskForm.task" @blur="addTask" placeholder="新規タスクを追加" style="width:8em;">
                             </tr>
                         </table>
                     </div>
@@ -99,7 +99,7 @@
             getPart(){
                 this.$store.dispatch('auth/getPart').then((result)=>{
                     if(result){
-                        
+                        this.$router.replace('/Tasks2')
                     }else{
                         this.part = result
                     }
@@ -107,9 +107,9 @@
             },
         },
         mounted() {
+            this.getPart()
             this.getTaskList()
             this.getChargeList()
-            this.getPart()
             console.log('Component mounted.')
         }
     }

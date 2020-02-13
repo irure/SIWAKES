@@ -9,7 +9,7 @@
                 </div>
                 <div class="panel">
                     <div class="card-header">
-                        <pie-chart :data="chartData" :colors ="colors" download = "graph"></pie-chart>
+                        <pie-chart :data="chartData" :colors ="colors" download = "graph" title="1回目" donut=true></pie-chart>
                     </div>
                     <div>
                         満足度は：<star-rating :star-size="30" v-model="rating" @rating-selected ="setRating" class="star-rating"></star-rating><br>
@@ -21,7 +21,7 @@
                             <p><button v-on:click="closeModal" style="float:left;">戻る</button></p><br>
                             <p>お疲れ様です！以下の内容でツイートしますか？</p>
                             <div class="form-group">
-                                <textarea class="form-control" type="text" v-model="text" cols="40" rows="10" style="resize: none;background-color:cornsilk;color:#333;font-size:14px;"></textarea>
+                                <textarea class="form-control" type="text" v-model="text" cols="40" rows="10" style="resize: none;background-color:floralwhite;color:#333;font-size:14px;"></textarea>
                                 <div class="text-danger" v-if="errors.text" v-text="errors.text"></div>
                             </div>
                             <div class="form-group">
@@ -102,6 +102,7 @@
                 
                 this.$store.dispatch('auth/postTwitter',formData)
                 this.$store.dispatch('auth/setPart')
+                alert("Tweetしました")
                 this.$router.replace('/Tasks2')
             },
             getRating(){
@@ -112,7 +113,7 @@
             getPart(){
                 this.$store.dispatch('auth/getPart').then((result)=>{
                     if(result){
-                        
+                        this.$router.replace('/Tasks2')
                     }else{
                         this.part = result
                     }
@@ -120,9 +121,9 @@
             },
         },
         mounted() {
+            this.getPart()
             this.getGraphData()
             this.getRating()
-            this.getPart()
             console.log('Component mounted.')
         }
     }
@@ -146,13 +147,7 @@
   justify-content: center;
 }
 
-#mordal{
-  z-index:2;
-  width:70%;
-  padding: 1em;
-  background:cornsilk;
-  
-}
+
 .tweet{
     background-color:#2795e9;
     color:#fff;

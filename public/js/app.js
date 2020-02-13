@@ -2183,7 +2183,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$store.dispatch('auth/getPart').then(function (result) {
         if (result) {
-          _this3.$router.replace('/');
+          _this3.$router.replace('/Tasks2');
         } else {
           _this3.part = result;
         }
@@ -2191,8 +2191,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    this.getChargeList();
     this.getPart();
+    this.getChargeList();
     console.log('Component mounted.');
   }
 });
@@ -2317,6 +2317,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.imageFile) formData.append('image', this.imageFile);
       this.$store.dispatch('auth/postTwitter', formData);
       this.$store.dispatch('auth/setPart');
+      alert("Tweetしました");
       this.$router.replace('/Tasks2');
     },
     getRating: function getRating() {
@@ -2330,16 +2331,18 @@ __webpack_require__.r(__webpack_exports__);
       var _this5 = this;
 
       this.$store.dispatch('auth/getPart').then(function (result) {
-        if (result) {} else {
+        if (result) {
+          _this5.$router.replace('/Tasks2');
+        } else {
           _this5.part = result;
         }
       });
     }
   },
   mounted: function mounted() {
+    this.getPart();
     this.getGraphData();
     this.getRating();
-    this.getPart();
     console.log('Component mounted.');
   }
 });
@@ -2355,7 +2358,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -2507,8 +2509,8 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('text', this.text);
       if (this.imageFile) formData.append('image', this.imageFile);
       this.$store.dispatch('auth/postTwitter', formData);
+      alert("Tweetしました");
       this.showContent2 = true;
-      this.$router.replace('/Tasks2');
     },
     getPart: function getPart() {
       var _this7 = this;
@@ -2527,11 +2529,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    this.getPart();
     this.getGraphData();
     this.getGraphData2();
     this.getRating();
     this.getRating2();
-    this.getPart();
     console.log('Component mounted.');
   }
 });
@@ -2780,16 +2782,18 @@ __webpack_require__.r(__webpack_exports__);
       var _this9 = this;
 
       this.$store.dispatch('auth/getPart').then(function (result) {
-        if (result) {} else {
+        if (result) {
+          _this9.$router.replace('/Tasks2');
+        } else {
           _this9.part = result;
         }
       });
     }
   },
   mounted: function mounted() {
+    this.getPart();
     this.getTaskList();
     this.getChargeList();
-    this.getPart();
     console.log('Component mounted.');
   }
 });
@@ -2900,9 +2904,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    this.getPart();
     this.getTaskList();
     this.getChargeList();
-    this.getPart();
     console.log('Component mounted.');
   }
 });
@@ -21532,7 +21536,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#overlay{\n  /*　要素を重ねた時の順番　*/\n  z-index:1;\n\n  /*　画面全体を覆う設定　*/\n  position:fixed;\n  top:0;\n  left:0;\n  width:100%;\n  height:100%;\n  background-color:rgba(0,0,0,0.5);\n\n  /*　画面の中央に要素を表示させる設定　*/\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n#mordal{\n  z-index:2;\n  width:70%;\n  padding: 1em;\n  background:cornsilk;\n}\n.tweet{\n    background-color:#2795e9;\n    color:#fff;\n}\n", ""]);
+exports.push([module.i, "\n#overlay{\n  /*　要素を重ねた時の順番　*/\n  z-index:1;\n\n  /*　画面全体を覆う設定　*/\n  position:fixed;\n  top:0;\n  left:0;\n  width:100%;\n  height:100%;\n  background-color:rgba(0,0,0,0.5);\n\n  /*　画面の中央に要素を表示させる設定　*/\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n.tweet{\n    background-color:#2795e9;\n    color:#fff;\n}\n", ""]);
 
 // exports
 
@@ -21551,7 +21555,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#overlay{\n  /*　要素を重ねた時の順番　*/\n  z-index:1;\n\n  /*　画面全体を覆う設定　*/\n  position:fixed;\n  top:0;\n  left:0;\n  width:100%;\n  height:100%;\n  background-color:rgba(0,0,0,0.5);\n\n  /*　画面の中央に要素を表示させる設定　*/\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n#mordal{\n  z-index:2;\n  width:70%;\n  padding: 1em;\n  background:cornsilk;\n}\n.tweet{\n    background-color:#2795e9;\n    color:#fff;\n}\n", ""]);
+exports.push([module.i, "\n#overlay{\n  /*　要素を重ねた時の順番　*/\n  z-index:1;\n\n  /*　画面全体を覆う設定　*/\n  position:fixed;\n  top:0;\n  left:0;\n  width:100%;\n  height:100%;\n  background-color:rgba(0,0,0,0.5);\n\n  /*　画面の中央に要素を表示させる設定　*/\n  display: -webkit-box;\n  display: flex;\n  -webkit-box-align: center;\n          align-items: center;\n  -webkit-box-pack: center;\n          justify-content: center;\n}\n#mordal{\n  z-index:2;\n  width:500px;\n  padding: 1em;\n  background:cornsilk;\n  border-radius:6px;\n}\n.tweet{\n    background-color:#2795e9;\n    color:#fff;\n}\n", ""]);
 
 // exports
 
@@ -60004,6 +60008,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
+                  staticStyle: { width: "7em" },
                   attrs: { type: "text", id: "charge" },
                   domProps: { value: charge.charge },
                   on: {
@@ -60092,7 +60097,9 @@ var render = function() {
                 attrs: {
                   data: _vm.chartData,
                   colors: _vm.colors,
-                  download: "graph"
+                  download: "graph",
+                  title: "1回目",
+                  donut: "true"
                 }
               })
             ],
@@ -60168,7 +60175,7 @@ var render = function() {
                     staticClass: "form-control",
                     staticStyle: {
                       resize: "none",
-                      "background-color": "cornsilk",
+                      "background-color": "floralwhite",
                       color: "#333",
                       "font-size": "14px"
                     },
@@ -60368,7 +60375,9 @@ var render = function() {
                 attrs: {
                   data: _vm.chartData,
                   colors: _vm.colors,
-                  download: "graph"
+                  download: "graph",
+                  title: "1回目",
+                  donut: "true"
                 }
               }),
               _vm._v(" "),
@@ -60414,7 +60423,9 @@ var render = function() {
                 attrs: {
                   data: _vm.chartData2,
                   colors: _vm.colors,
-                  download: "graph2"
+                  download: "graph2",
+                  title: "2回目",
+                  donut: "true"
                 }
               }),
               _vm._v(" "),
@@ -60487,7 +60498,7 @@ var render = function() {
                         staticClass: "form-control",
                         staticStyle: {
                           resize: "none",
-                          "background-color": "cornsilk",
+                          "background-color": "floralwhite",
                           color: "#333",
                           "font-size": "14px"
                         },
@@ -60536,22 +60547,8 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticStyle: { float: "left" },
-                          on: { click: _vm.finishGraph }
-                        },
-                        [_vm._v("ツイートせず完了")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _c(
-                        "button",
-                        {
                           staticClass: "tweet",
-                          staticStyle: {
-                            float: "right",
-                            "text-align": "center"
-                          },
+                          staticStyle: { "text-align": "center" },
                           on: { click: _vm.postTwitter }
                         },
                         [_vm._v("ツイートして完了")]
@@ -60700,7 +60697,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      staticStyle: { width: "100px" },
+                      staticStyle: { width: "8em" },
                       attrs: { type: "text", id: "task" },
                       domProps: { value: task.task },
                       on: {
@@ -60728,7 +60725,7 @@ var render = function() {
                         }
                       ],
                       staticClass: "form-control",
-                      staticStyle: { width: "40px" },
+                      staticStyle: { width: "4em" },
                       attrs: { type: "howlong", id: "howlong" },
                       domProps: { value: task.howlong },
                       on: {
@@ -60874,7 +60871,7 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-control",
-                  staticStyle: { width: "100px" },
+                  staticStyle: { width: "8em" },
                   attrs: {
                     type: "text",
                     id: "inputtask",

@@ -79,9 +79,9 @@
             }
         },
         mounted() {
+            this.getPart()
             this.getTaskList()
             this.getChargeList()
-            this.getPart()
             console.log('Component mounted.')
         }
     }

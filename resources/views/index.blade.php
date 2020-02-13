@@ -29,6 +29,7 @@
 <style>
   html{
     background-color: antiquewhite;
+    font-size: 62.5%;
 }
 .navbar{
     background-color:lightpink;
@@ -47,4 +48,23 @@ input,select{
   justify-content:center;
   display:flex;
 }
+
+body,input,select,button,p,label,div{
+    font-size:1rem;
+    line-height: 2;
+    border-radius:6px;
+    box-shadow: none;
+}
+table{
+  border-spacing:3px;
+}
+
+
+@media screen and (max-width: 640px) {/* 640px以下*/
+    body,input,select{
+    font-size:0.9rem;
+    line-height: 2;
+}
+}
+
 </style>

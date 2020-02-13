@@ -10,7 +10,7 @@
                 <div class="panel">
                     <div class="card" v-for="charge in charges">
                         <div class="card-header">
-                            担当{{charge.charge_id}}:<input type="text" class="form-control" id="charge" v-model="charge.charge" @blur="updateChargeList(charge.id)">
+                            担当{{charge.charge_id}}:<input type="text" class="form-control" id="charge" v-model="charge.charge" @blur="updateChargeList(charge.id)" style="width:7em;">
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
             getPart(){
                 this.$store.dispatch('auth/getPart').then((result)=>{
                     if(result){
-                        this.$router.replace('/')
+                        this.$router.replace('/Tasks2')
                     }else{
                         this.part = result
                     }
@@ -50,8 +50,8 @@
             },
         },
         mounted() {
-            this.getChargeList()
             this.getPart()
+            this.getChargeList()
             console.log('Component mounted.')
         }
     }
