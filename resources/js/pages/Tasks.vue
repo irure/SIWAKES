@@ -28,7 +28,7 @@
                             <td><button type="button" class="btn btn-danger" @click="deleteTask(task.id)">Delete</button></td>
                             </tr>
                             <tr>
-                                <input type="text" class="form-control" id="inputtask" v-model="taskForm.task" @blur="addTask" placeholder="新規タスクを追加" style="width:8em;">
+                                <input type="text" class="form-control" id="inputtask" v-model="taskForm.task" @blur="addTask" placeholder="タスク追加" style="width:8em;">
                             </tr>
                         </table>
                     </div>
@@ -49,6 +49,11 @@
                 },
                 times:[1,2,3,4,5,6,7],
                 charges:[]
+            }
+        },
+        computed:{
+            partStatus(){
+                return this.$store.state.auth.part
             }
         },
         methods:{
@@ -96,15 +101,14 @@
                     this.charges = result
                 })
             },
-            getPart(){
-                this.$store.dispatch('auth/getPart').then((result)=>{
-                    if(result){
-                        this.$router.replace('/Tasks2')
-                    }else{
-                        this.part = result
-                    }
-                })
+            async getPart(){
+                if(this.partStatus){
+                    await this.$router.replace('/Tasks2')
+                }else{
+                    
+                }
             },
+            
         },
         mounted() {
             this.getPart()

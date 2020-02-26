@@ -47,6 +47,11 @@
                 charges:[]
             }
         },
+        computed:{
+            partStatus(){
+                return this.$store.state.auth.part
+            }
+        },
         methods:{
             getTaskList(){
                 this.$store.dispatch('auth/getTask').then((result)=>{
@@ -64,21 +69,20 @@
                     this.charges = result
                 })
             },
-            getPart(){
-                this.$store.dispatch('auth/getPart').then((result)=>{
-                    if(result){
-                        this.part = result
-                    }else{
-                        this.$router.replace('/')
-                    }
-                })
+            async getPart(){
+                if(await this.partStatus){
+                }else{
+                    await this.$router.replace('/')
+                }
             },
-            setPartFalse(){
-                this.$store.dispatch('auth/setPartFalse')
-                this.$router.replace('/')
+            async setPartFalse(){
+                await this.$store.dispatch('auth/setPartFalse')
+                await this.$router.replace('/')
             }
         },
+        
         mounted() {
+            this.$store.watch((state, getters) => getters.setPart,)
             this.getPart()
             this.getTaskList()
             this.getChargeList()

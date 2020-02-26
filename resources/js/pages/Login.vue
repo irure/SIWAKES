@@ -1,15 +1,15 @@
 <template>
   <div class="container--small">
+      <div class="row justify-content-center">
     <div class="panel" >
-        <div class="panel">
-            <form class="form"  @submit.prevent="login">
-                <div>
-                    <button class="btn btn-block btn-social btn-twitter">
-                        <span class="fa fa-twitter"></span><div style="font-size:22px">Sign in With Twitter</div>
-                    </button>
-                </div>
-            </form>
-        </div>
+        <form class="form"  @submit.prevent="login">
+            <div>
+                <button class="btn btn-block btn-social btn-twitter">
+                    <span class="fa fa-twitter"></span><div>Sign in With Twitter</div>
+                </button>
+            </div>
+        </form>
+    </div>
     </div>
     
 </div>

@@ -38,7 +38,8 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="file" accept="image/*" @change="onFileChange"><br>
-                                <label>ダウンロードしたグラフを追加できます</label><br>
+                                <input class="form-control" type="file" accept="image/*" @change="onFileChange2"><br>
+                                <label>ダウンロードしたグラフなどを追加できます</label><br>
                                 <div class="text-danger" v-if="errors.image" v-text="errors.image"></div>
                             </div>
                         <p><button v-on:click="postTwitter" style="text-align:center;"class="tweet">ツイートして完了</button></p>
@@ -69,10 +70,16 @@
                 text: '',
                 image: '',
                 imageFile: null,
+                imageFile2: null,
                 errors: {
                     text: '',
                     image: ''
                 }
+            }
+        },
+        computed:{
+            partStatus(){
+                return this.$store.state.auth.part
             }
         },
         methods:{
@@ -127,31 +134,32 @@
                 // 選択された画像を変数で保持する
                 this.imageFile = e.target.files[0];
             },
+            onFileChange2(e) {
+                // 選択された画像を変数で保持する
+                this.imageFile2 = e.target.files[0];
+            },
             postTwitter(){
                 this.showContent = false
                 // 画像をアップロード
-                const url = '/share';
                 let formData = new FormData();
                 formData.append('text', this.text);
                 if(this.imageFile)formData.append('image', this.imageFile);
+                if(this.imageFile2)formData.append('image2', this.imageFile2);
                 
                 this.$store.dispatch('auth/postTwitter',formData)
                 alert("Tweetしました")
                 this.showContent2=true
                 
             },
-            getPart(){
-                this.$store.dispatch('auth/getPart').then((result)=>{
-                    if(result){
-                        this.part = result
-                    }else{
-                        this.$router.replace('/')
-                    }
-                })
+            async getPart(){
+                if(await this.partStatus){
+                }else{
+                    await this.$router.replace('/')
+                }
             },
-            setPartFalse(){
-                this.$store.dispatch('auth/setPartFalse')
-                this.$router.replace('/')
+            async setPartFalse(){
+                await this.$store.dispatch('auth/setPartFalse')
+                await this.$router.replace('/')
             }
         },
         mounted() {

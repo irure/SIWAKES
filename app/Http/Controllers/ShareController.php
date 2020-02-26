@@ -21,24 +21,45 @@ class ShareController extends Controller
     public function store(Request $request) {
         $user = Auth::user();
         
-        $consumerKey = '5z1MzrqrP3gCDgoz6tM04GnSa';
-        $consumerSecret = 'XUEDzMEHbvLTWxTWsfJ0EZRZNL96VGgRfWQXNJS1kADe4GnXv6';
+        $consumerKey = env('TWITTER_CONSUMER_KEY');
+        $consumerSecret = env('TWITTER_CONSUMER_SECRET');
         $accessToken = $user->oauth_token;
         $accessTokenSecret = $user->oauth_token_secret;
 
         $twitter = new TwitterOAuth($consumerKey, $consumerSecret, $accessToken, $accessTokenSecret);
         
-        if($request->image){
+        if($request->image && $request->image2){
+            $picture1 = $twitter->upload("media/upload", ["media" => $request->image]);
+            $picture2 = $twitter->upload("media/upload", ["media" => $request->image2]);
+            
+            $result = $twitter->post(
+            "statuses/update",
+                array(
+                    "status" => $request->text,
+                    "media_ids" => implode(",", [$picture1->media_id_string,$picture2->media_id_string])
+                )
+            );
+        }else if($request->image){
             $picture1 = $twitter->upload("media/upload", ["media" => $request->image]);
             
             $result = $twitter->post(
             "statuses/update",
                 array(
-                    "status" => "testtext",
+                    "status" => $request->text,
                     "media_ids" => implode(",", [$picture1->media_id_string])
                 )
             );
-        }else{
+        }else if($request->image2){
+            $picture2 = $twitter->upload("media/upload", ["media" => $request->image2]);
+            
+            $result = $twitter->post(
+            "statuses/update",
+                array(
+                    "status" => $request->text,
+                    "media_ids" => implode(",", [$picture2->media_id_string])
+                )
+            );
+        }else {
             $result = $twitter->post("statuses/update", array("status" => $request->text));
         }
         

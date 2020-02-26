@@ -6,7 +6,8 @@ const state = {
   user: null,
   apiStatus: null,
   loginErrorMessages: null,
-  registerErrorMessages: null
+  registerErrorMessages: null,
+  part:null
 }
 
 const getters = {
@@ -30,6 +31,9 @@ const mutations = {
   },
   setToken (state,  token ) {
     state.token = token
+  },
+  setPart (state,  part ) {
+    state.part = part
   }
 }
 
@@ -355,20 +359,6 @@ const actions = {
     context.commit('error/setCode', response.status, { root: true })
   },
   
-  //２回目に設定
-  async setPart(context){
-    const response = await axios.post('/api/setPart')
-    console.log(response.data)
-    
-    if (response.status === OK) {
-      context.commit('setApiStatus', true)
-      return response.data
-    }
-    
-    context.commit('setApiStatus', false)
-    context.commit('error/setCode', response.status, { root: true })
-  },
-  
   //Part情報を取得
   async getPart(context){
     const response = await axios.get('/api/getPart')
@@ -383,19 +373,35 @@ const actions = {
     context.commit('error/setCode', response.status, { root: true })
   },
   
-  //Partを１回目に設定
+  //Partを0に設定
   async setPartFalse(context){
     const response = await axios.post('/api/setPartFalse')
     console.log(response.data)
     
     if (response.status === OK) {
       context.commit('setApiStatus', true)
+      context.commit('setPart', 0)
       return response.data
     }
     
     context.commit('setApiStatus', false)
     context.commit('error/setCode', response.status, { root: true })
-  }
+  },
+  
+  //Partを1に設定
+  async setPart(context){
+    const response = await axios.post('/api/setPart')
+    console.log(response.data)
+    
+    if (response.status === OK) {
+      context.commit('setApiStatus', true)
+      context.commit('setPart', 1)
+      return response.data
+    }
+    
+    context.commit('setApiStatus', false)
+    context.commit('error/setCode', response.status, { root: true })
+  },
 }
 
 export default {

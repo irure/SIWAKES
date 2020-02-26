@@ -49,6 +49,13 @@ input,select{
   display:flex;
 }
 
+.fuchidori {
+  text-shadow:1px 1px 0 #666, -1px -1px 0 #666,
+              -1px 1px 0 #666, 1px -1px 0 #666,
+              0px 1px 0 #666,  0-1px 0 #666,
+              -1px 0 0 #666, 1px 0 0 #666;
+}
+
 body,input,select,button,p,label,div{
     font-size:1rem;
     line-height: 2;
@@ -63,6 +70,13 @@ table{
 @media screen and (max-width: 640px) {/* 640px以下*/
     body,input,select{
     font-size:0.9rem;
+    line-height: 2;
+}
+}
+
+@media screen and (max-width: 400px) {/* 640px以下*/
+    body,input,select,button{
+    font-size:0.5rem;
     line-height: 2;
 }
 }

@@ -176,7 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         
         \SocialiteProviders\Manager\ServiceProvider::class,
-        Fruitcake\Cors\ServiceProvider::class,
+        //Fruitcake\Cors\ServiceProvider::class,
     ],
 
     /*

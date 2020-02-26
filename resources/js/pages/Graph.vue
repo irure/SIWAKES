@@ -26,7 +26,8 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="file" accept="image/*" @change="onFileChange"><br>
-                                <label>ダウンロードしたグラフを追加できます</label><br>
+                                <input class="form-control" type="file" accept="image/*" @change="onFileChange2"><br>
+                                <label>ダウンロードしたグラフなどを追加できます</label><br>
                                 <div class="text-danger" v-if="errors.image" v-text="errors.image"></div>
                             </div>
                         <p><button v-on:click="finishGraph" style="float:left;">ツイートせず1回目の仕分けを完了</button></p>
@@ -58,6 +59,11 @@
                 }
             }
         },
+        computed:{
+            partStatus(){
+                return this.$store.state.auth.part
+            }
+        },
         methods:{
             getChargeList(){
                 this.$store.dispatch('auth/getCharge').then((result)=>{
@@ -83,41 +89,43 @@
             closeModal: function(){
                 this.showContent = false
             },
-            finishGraph(){
+            async finishGraph(){
                 this.showContent=false
-                this.$store.dispatch('auth/setPart')
-                this.$router.replace('/Tasks2')
+                await this.$store.dispatch('auth/setPart')
+                await this.$router.replace('/Tasks2')
             },
             onFileChange(e) {
                 // 選択された画像を変数で保持する
                 this.imageFile = e.target.files[0];
             },
-            postTwitter(){
+            onFileChange2(e) {
+                // 選択された画像を変数で保持する
+                this.imageFile2 = e.target.files[0];
+            },
+            async postTwitter(){
                 this.showContent = false
                 // 画像をアップロード
-                const url = '/share';
                 let formData = new FormData();
                 formData.append('text', this.text);
                 if(this.imageFile)formData.append('image', this.imageFile);
+                if(this.imageFile2)formData.append('image2', this.imageFile2);
                 
                 this.$store.dispatch('auth/postTwitter',formData)
-                this.$store.dispatch('auth/setPart')
+                await this.$store.dispatch('auth/setPart')
                 alert("Tweetしました")
-                this.$router.replace('/Tasks2')
+                await this.$router.replace('/Tasks2')
             },
             getRating(){
                 this.$store.dispatch('auth/getRating').then((result)=>{
                     this.rating = result
                 })
             },
-            getPart(){
-                this.$store.dispatch('auth/getPart').then((result)=>{
-                    if(result){
-                        this.$router.replace('/Tasks2')
-                    }else{
-                        this.part = result
-                    }
-                })
+            async getPart(){
+                if(this.partStatus){
+                    await this.$router.replace('/Tasks2')
+                }else{
+                    
+                }
             },
         },
         mounted() {

@@ -2127,6 +2127,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
 //
 //
 //
@@ -2155,6 +2164,11 @@ __webpack_require__.r(__webpack_exports__);
       charges: []
     };
   },
+  computed: {
+    partStatus: function partStatus() {
+      return this.$store.state.auth.part;
+    }
+  },
   methods: {
     getChargeList: function getChargeList() {
       var _this = this;
@@ -2178,17 +2192,40 @@ __webpack_require__.r(__webpack_exports__);
         _this2.getChargeList();
       });
     },
-    getPart: function getPart() {
-      var _this3 = this;
+    getPart: function () {
+      var _getPart = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.partStatus) {
+                  _context.next = 5;
+                  break;
+                }
 
-      this.$store.dispatch('auth/getPart').then(function (result) {
-        if (result) {
-          _this3.$router.replace('/Tasks2');
-        } else {
-          _this3.part = result;
-        }
-      });
-    }
+                _context.next = 3;
+                return this.$router.replace('/Tasks2');
+
+              case 3:
+                _context.next = 5;
+                break;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function getPart() {
+        return _getPart.apply(this, arguments);
+      }
+
+      return getPart;
+    }()
   },
   mounted: function mounted() {
     this.getPart();
@@ -2208,6 +2245,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
 //
 //
 //
@@ -2267,6 +2313,11 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
+  computed: {
+    partStatus: function partStatus() {
+      return this.$store.state.auth.part;
+    }
+  },
   methods: {
     getChargeList: function getChargeList() {
       var _this = this;
@@ -2299,27 +2350,82 @@ __webpack_require__.r(__webpack_exports__);
     closeModal: function closeModal() {
       this.showContent = false;
     },
-    finishGraph: function finishGraph() {
-      this.showContent = false;
-      this.$store.dispatch('auth/setPart');
-      this.$router.replace('/Tasks2');
-    },
+    finishGraph: function () {
+      var _finishGraph = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                this.showContent = false;
+                _context.next = 3;
+                return this.$store.dispatch('auth/setPart');
+
+              case 3:
+                _context.next = 5;
+                return this.$router.replace('/Tasks2');
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function finishGraph() {
+        return _finishGraph.apply(this, arguments);
+      }
+
+      return finishGraph;
+    }(),
     onFileChange: function onFileChange(e) {
       // 選択された画像を変数で保持する
       this.imageFile = e.target.files[0];
     },
-    postTwitter: function postTwitter() {
-      this.showContent = false; // 画像をアップロード
-
-      var url = '/share';
-      var formData = new FormData();
-      formData.append('text', this.text);
-      if (this.imageFile) formData.append('image', this.imageFile);
-      this.$store.dispatch('auth/postTwitter', formData);
-      this.$store.dispatch('auth/setPart');
-      alert("Tweetしました");
-      this.$router.replace('/Tasks2');
+    onFileChange2: function onFileChange2(e) {
+      // 選択された画像を変数で保持する
+      this.imageFile2 = e.target.files[0];
     },
+    postTwitter: function () {
+      var _postTwitter = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var formData;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                this.showContent = false; // 画像をアップロード
+
+                formData = new FormData();
+                formData.append('text', this.text);
+                if (this.imageFile) formData.append('image', this.imageFile);
+                if (this.imageFile2) formData.append('image2', this.imageFile2);
+                this.$store.dispatch('auth/postTwitter', formData);
+                _context2.next = 8;
+                return this.$store.dispatch('auth/setPart');
+
+              case 8:
+                alert("Tweetしました");
+                _context2.next = 11;
+                return this.$router.replace('/Tasks2');
+
+              case 11:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function postTwitter() {
+        return _postTwitter.apply(this, arguments);
+      }
+
+      return postTwitter;
+    }(),
     getRating: function getRating() {
       var _this4 = this;
 
@@ -2327,17 +2433,40 @@ __webpack_require__.r(__webpack_exports__);
         _this4.rating = result;
       });
     },
-    getPart: function getPart() {
-      var _this5 = this;
+    getPart: function () {
+      var _getPart = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                if (!this.partStatus) {
+                  _context3.next = 5;
+                  break;
+                }
 
-      this.$store.dispatch('auth/getPart').then(function (result) {
-        if (result) {
-          _this5.$router.replace('/Tasks2');
-        } else {
-          _this5.part = result;
-        }
-      });
-    }
+                _context3.next = 3;
+                return this.$router.replace('/Tasks2');
+
+              case 3:
+                _context3.next = 5;
+                break;
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function getPart() {
+        return _getPart.apply(this, arguments);
+      }
+
+      return getPart;
+    }()
   },
   mounted: function mounted() {
     this.getPart();
@@ -2358,6 +2487,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
 //
 //
 //
@@ -2428,11 +2566,17 @@ __webpack_require__.r(__webpack_exports__);
       text: '',
       image: '',
       imageFile: null,
+      imageFile2: null,
       errors: {
         text: '',
         image: ''
       }
     };
+  },
+  computed: {
+    partStatus: function partStatus() {
+      return this.$store.state.auth.part;
+    }
   },
   methods: {
     getChargeList: function getChargeList() {
@@ -2501,32 +2645,88 @@ __webpack_require__.r(__webpack_exports__);
       // 選択された画像を変数で保持する
       this.imageFile = e.target.files[0];
     },
+    onFileChange2: function onFileChange2(e) {
+      // 選択された画像を変数で保持する
+      this.imageFile2 = e.target.files[0];
+    },
     postTwitter: function postTwitter() {
       this.showContent = false; // 画像をアップロード
 
-      var url = '/share';
       var formData = new FormData();
       formData.append('text', this.text);
       if (this.imageFile) formData.append('image', this.imageFile);
+      if (this.imageFile2) formData.append('image2', this.imageFile2);
       this.$store.dispatch('auth/postTwitter', formData);
       alert("Tweetしました");
       this.showContent2 = true;
     },
-    getPart: function getPart() {
-      var _this7 = this;
+    getPart: function () {
+      var _getPart = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.partStatus;
 
-      this.$store.dispatch('auth/getPart').then(function (result) {
-        if (result) {
-          _this7.part = result;
-        } else {
-          _this7.$router.replace('/');
-        }
-      });
-    },
-    setPartFalse: function setPartFalse() {
-      this.$store.dispatch('auth/setPartFalse');
-      this.$router.replace('/');
-    }
+              case 2:
+                if (!_context.sent) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 7;
+                break;
+
+              case 5:
+                _context.next = 7;
+                return this.$router.replace('/');
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function getPart() {
+        return _getPart.apply(this, arguments);
+      }
+
+      return getPart;
+    }(),
+    setPartFalse: function () {
+      var _setPartFalse = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.$store.dispatch('auth/setPartFalse');
+
+              case 2:
+                _context2.next = 4;
+                return this.$router.replace('/');
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function setPartFalse() {
+        return _setPartFalse.apply(this, arguments);
+      }
+
+      return setPartFalse;
+    }()
   },
   mounted: function mounted() {
     this.getPart();
@@ -2635,6 +2835,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2686,6 +2894,11 @@ __webpack_require__.r(__webpack_exports__);
       times: [1, 2, 3, 4, 5, 6, 7],
       charges: []
     };
+  },
+  computed: {
+    partStatus: function partStatus() {
+      return this.$store.state.auth.part;
+    }
   },
   methods: {
     addTask: function addTask() {
@@ -2778,17 +2991,40 @@ __webpack_require__.r(__webpack_exports__);
         _this8.charges = result;
       });
     },
-    getPart: function getPart() {
-      var _this9 = this;
+    getPart: function () {
+      var _getPart = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                if (!this.partStatus) {
+                  _context.next = 5;
+                  break;
+                }
 
-      this.$store.dispatch('auth/getPart').then(function (result) {
-        if (result) {
-          _this9.$router.replace('/Tasks2');
-        } else {
-          _this9.part = result;
-        }
-      });
-    }
+                _context.next = 3;
+                return this.$router.replace('/Tasks2');
+
+              case 3:
+                _context.next = 5;
+                break;
+
+              case 5:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function getPart() {
+        return _getPart.apply(this, arguments);
+      }
+
+      return getPart;
+    }()
   },
   mounted: function mounted() {
     this.getPart();
@@ -2809,6 +3045,14 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2857,6 +3101,11 @@ __webpack_require__.r(__webpack_exports__);
       charges: []
     };
   },
+  computed: {
+    partStatus: function partStatus() {
+      return this.$store.state.auth.part;
+    }
+  },
   methods: {
     getTaskList: function getTaskList() {
       var _this = this;
@@ -2887,23 +3136,78 @@ __webpack_require__.r(__webpack_exports__);
         _this3.charges = result;
       });
     },
-    getPart: function getPart() {
-      var _this4 = this;
+    getPart: function () {
+      var _getPart = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return this.partStatus;
 
-      this.$store.dispatch('auth/getPart').then(function (result) {
-        if (result) {
-          _this4.part = result;
-        } else {
-          _this4.$router.replace('/');
-        }
-      });
-    },
-    setPartFalse: function setPartFalse() {
-      this.$store.dispatch('auth/setPartFalse');
-      this.$router.replace('/');
-    }
+              case 2:
+                if (!_context.sent) {
+                  _context.next = 5;
+                  break;
+                }
+
+                _context.next = 7;
+                break;
+
+              case 5:
+                _context.next = 7;
+                return this.$router.replace('/');
+
+              case 7:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function getPart() {
+        return _getPart.apply(this, arguments);
+      }
+
+      return getPart;
+    }(),
+    setPartFalse: function () {
+      var _setPartFalse = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                _context2.next = 2;
+                return this.$store.dispatch('auth/setPartFalse');
+
+              case 2:
+                _context2.next = 4;
+                return this.$router.replace('/');
+
+              case 4:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, this);
+      }));
+
+      function setPartFalse() {
+        return _setPartFalse.apply(this, arguments);
+      }
+
+      return setPartFalse;
+    }()
   },
   mounted: function mounted() {
+    this.$store.watch(function (state, getters) {
+      return getters.setPart;
+    });
     this.getPart();
     this.getTaskList();
     this.getChargeList();
@@ -59990,43 +60294,67 @@ var render = function() {
         _c(
           "div",
           { staticClass: "panel" },
-          _vm._l(_vm.charges, function(charge) {
-            return _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _vm._v(
-                  "\n                        担当" +
-                    _vm._s(charge.charge_id) +
-                    ":"
-                ),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: charge.charge,
-                      expression: "charge.charge"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  staticStyle: { width: "7em" },
-                  attrs: { type: "text", id: "charge" },
-                  domProps: { value: charge.charge },
-                  on: {
-                    blur: function($event) {
-                      return _vm.updateChargeList(charge.id)
-                    },
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+          [
+            _vm._l(_vm.charges, function(charge) {
+              return _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-header" }, [
+                  _vm._v(
+                    "\n                        担当" +
+                      _vm._s(charge.charge_id) +
+                      ":"
+                  ),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: charge.charge,
+                        expression: "charge.charge"
                       }
-                      _vm.$set(charge, "charge", $event.target.value)
+                    ],
+                    staticClass: "form-control",
+                    staticStyle: { width: "7em" },
+                    attrs: { type: "text", id: "charge" },
+                    domProps: { value: charge.charge },
+                    on: {
+                      blur: function($event) {
+                        return _vm.updateChargeList(charge.id)
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(charge, "charge", $event.target.value)
+                      }
                     }
-                  }
-                })
+                  })
+                ])
               ])
-            ])
-          }),
-          0
+            }),
+            _vm._v("\n                ※担当１は"),
+            _c(
+              "label",
+              {
+                staticClass: "fuchidori",
+                staticStyle: { color: "lightskyblue" }
+              },
+              [_vm._v("青")]
+            ),
+            _vm._v("、２は"),
+            _c(
+              "label",
+              { staticClass: "fuchidori", staticStyle: { color: "gainsboro" } },
+              [_vm._v("灰色")]
+            ),
+            _vm._v("、３は"),
+            _c(
+              "label",
+              { staticClass: "fuchidori", staticStyle: { color: "lightpink" } },
+              [_vm._v("ピンク色")]
+            ),
+            _vm._v("でグラフに描画されます\n            ")
+          ],
+          2
         )
       ])
     ])
@@ -60207,7 +60535,16 @@ var render = function() {
                   }),
                   _c("br"),
                   _vm._v(" "),
-                  _c("label", [_vm._v("ダウンロードしたグラフを追加できます")]),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: { type: "file", accept: "image/*" },
+                    on: { change: _vm.onFileChange2 }
+                  }),
+                  _c("br"),
+                  _vm._v(" "),
+                  _c("label", [
+                    _vm._v("ダウンロードしたグラフなどを追加できます")
+                  ]),
                   _c("br"),
                   _vm._v(" "),
                   _vm.errors.image
@@ -60530,8 +60867,15 @@ var render = function() {
                       }),
                       _c("br"),
                       _vm._v(" "),
+                      _c("input", {
+                        staticClass: "form-control",
+                        attrs: { type: "file", accept: "image/*" },
+                        on: { change: _vm.onFileChange2 }
+                      }),
+                      _c("br"),
+                      _vm._v(" "),
                       _c("label", [
-                        _vm._v("ダウンロードしたグラフを追加できます")
+                        _vm._v("ダウンロードしたグラフなどを追加できます")
                       ]),
                       _c("br"),
                       _vm._v(" "),
@@ -60588,7 +60932,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container--small" }, [
-    _c("div", { staticClass: "panel" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "panel" }, [
         _c(
           "form",
@@ -60615,9 +60959,7 @@ var staticRenderFns = [
     return _c("div", [
       _c("button", { staticClass: "btn btn-block btn-social btn-twitter" }, [
         _c("span", { staticClass: "fa fa-twitter" }),
-        _c("div", { staticStyle: { "font-size": "22px" } }, [
-          _vm._v("Sign in With Twitter")
-        ])
+        _c("div", [_vm._v("Sign in With Twitter")])
       ])
     ])
   }
@@ -60875,7 +61217,7 @@ var render = function() {
                   attrs: {
                     type: "text",
                     id: "inputtask",
-                    placeholder: "新規タスクを追加"
+                    placeholder: "タスク追加"
                   },
                   domProps: { value: _vm.taskForm.task },
                   on: {
@@ -78428,7 +78770,8 @@ var state = {
   user: null,
   apiStatus: null,
   loginErrorMessages: null,
-  registerErrorMessages: null
+  registerErrorMessages: null,
+  part: null
 };
 var getters = {
   check: function check(state) {
@@ -78456,6 +78799,9 @@ var mutations = {
   },
   setToken: function setToken(state, token) {
     state.token = token;
+  },
+  setPart: function setPart(state, part) {
+    state.part = part;
   }
 };
 var actions = {
@@ -79463,9 +79809,9 @@ var actions = {
 
     return postTwitter;
   }(),
-  //２回目に設定
-  setPart: function () {
-    var _setPart = _asyncToGenerator(
+  //Part情報を取得
+  getPart: function () {
+    var _getPart = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee23(context) {
       var response;
@@ -79474,7 +79820,7 @@ var actions = {
           switch (_context23.prev = _context23.next) {
             case 0:
               _context23.next = 2;
-              return axios.post('/api/setPart');
+              return axios.get('/api/getPart');
 
             case 2:
               response = _context23.sent;
@@ -79502,15 +79848,15 @@ var actions = {
       }, _callee23);
     }));
 
-    function setPart(_x35) {
-      return _setPart.apply(this, arguments);
+    function getPart(_x35) {
+      return _getPart.apply(this, arguments);
     }
 
-    return setPart;
+    return getPart;
   }(),
-  //Part情報を取得
-  getPart: function () {
-    var _getPart = _asyncToGenerator(
+  //Partを0に設定
+  setPartFalse: function () {
+    var _setPartFalse = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee24(context) {
       var response;
@@ -79519,27 +79865,28 @@ var actions = {
           switch (_context24.prev = _context24.next) {
             case 0:
               _context24.next = 2;
-              return axios.get('/api/getPart');
+              return axios.post('/api/setPartFalse');
 
             case 2:
               response = _context24.sent;
               console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context24.next = 7;
+                _context24.next = 8;
                 break;
               }
 
               context.commit('setApiStatus', true);
+              context.commit('setPart', 0);
               return _context24.abrupt("return", response.data);
 
-            case 7:
+            case 8:
               context.commit('setApiStatus', false);
               context.commit('error/setCode', response.status, {
                 root: true
               });
 
-            case 9:
+            case 10:
             case "end":
               return _context24.stop();
           }
@@ -79547,15 +79894,15 @@ var actions = {
       }, _callee24);
     }));
 
-    function getPart(_x36) {
-      return _getPart.apply(this, arguments);
+    function setPartFalse(_x36) {
+      return _setPartFalse.apply(this, arguments);
     }
 
-    return getPart;
+    return setPartFalse;
   }(),
-  //Partを１回目に設定
-  setPartFalse: function () {
-    var _setPartFalse = _asyncToGenerator(
+  //Partを1に設定
+  setPart: function () {
+    var _setPart = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee25(context) {
       var response;
@@ -79564,27 +79911,28 @@ var actions = {
           switch (_context25.prev = _context25.next) {
             case 0:
               _context25.next = 2;
-              return axios.post('/api/setPartFalse');
+              return axios.post('/api/setPart');
 
             case 2:
               response = _context25.sent;
               console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context25.next = 7;
+                _context25.next = 8;
                 break;
               }
 
               context.commit('setApiStatus', true);
+              context.commit('setPart', 1);
               return _context25.abrupt("return", response.data);
 
-            case 7:
+            case 8:
               context.commit('setApiStatus', false);
               context.commit('error/setCode', response.status, {
                 root: true
               });
 
-            case 9:
+            case 10:
             case "end":
               return _context25.stop();
           }
@@ -79592,11 +79940,11 @@ var actions = {
       }, _callee25);
     }));
 
-    function setPartFalse(_x37) {
-      return _setPartFalse.apply(this, arguments);
+    function setPart(_x37) {
+      return _setPart.apply(this, arguments);
     }
 
-    return setPartFalse;
+    return setPart;
   }()
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
