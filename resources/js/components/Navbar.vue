@@ -20,7 +20,11 @@
 export default {
   computed: {
     isLogin () {
-      return this.$store.getters['auth/check']
+      if(this.$store.getters['auth/check']){
+        return this.$store.getters['auth/check']
+      }else if(this.$route.path != '/login'){
+        this.$router.replace('/login')
+      }
     },
     username () {
       return this.$store.getters['auth/username']

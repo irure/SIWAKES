@@ -2,7 +2,7 @@
   <div class="container--small">
       <div class="row justify-content-center">
     <div class="panel" >
-        <form class="form"  @submit.prevent="login">
+        <form class="form" @submit.prevent="login">
             <div>
                 <button class="btn btn-block btn-social btn-twitter">
                     <span class="fa fa-twitter"></span><div>Sign in With Twitter</div>
@@ -29,12 +29,9 @@ export default {
             return this.$store.state.auth.registerErrorMessages
         }
     }, methods: {
-        
-        async login(){
-            if (this.apiStatus) {
+        login(){
                 // リダイレクトページに移動する
                 this.$router.push('/oauth/twitter')
-            }
         }
         ,clearError () {
             this.$store.commit('auth/setLoginErrorMessages', null)
