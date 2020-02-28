@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="panel toppanel" style="padding:5px;">
-                    <router-link to="/" tag="button"class="button" @click.native="setPartFalse"><<1回目に戻る</router-link>
+                    <button tag="button"class="button" v-on:click="setPartFalse"><<1回目に戻る</button>
                 </div>
                 <div class="panel toppanel">
                     <router-link to="/Tasks2" tag="button"class="button sbutton">タスク一覧</router-link>
@@ -12,12 +12,13 @@
                 <div class="panel table-responsive">
                     <table class="table-striped" align="center">
                         <tr>
-                            <td>タスク名</td><td>1回/分</td><td>1週間/回</td><td>担当者</td><td></td><td>担当2</td>
+                            <td>タスク名</td><td v-if=" isLarge === true ">1回/分</td><td v-if=" isLarge === true ">1週間/回</td><td v-if=" isLarge === false ">時間</td><td>担当者</td><td></td><td>担当2</td>
                         </tr>
                         <tr class="card" v-for="task in tasks">
                             <td>{{task.task}}</td>
-                            <td>{{task.howlong}}分</td>
-                            <td>{{task.howtimes}}回</td>
+                            <td v-if=" isLarge === true ">{{task.howlong}}分</td>
+                            <td v-if=" isLarge === true ">{{task.howtimes}}回</td>
+                            <td v-if=" isLarge === false ">{{task.howlong*task.howtimes}}分</td>
                             <td>{{task.charge}}</td>
                             <td>⇒</td>
                             <td><select class="form-control" v-model="task.charge2" @blur="updateCharge2(task.id)">
@@ -50,6 +51,14 @@
         computed:{
             partStatus(){
                 return this.$store.state.auth.part
+            },
+            isLarge() {
+                if(window.matchMedia('(min-width: 600px)').matches)
+                {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         },
         methods:{

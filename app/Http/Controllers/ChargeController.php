@@ -24,6 +24,7 @@ class ChargeController extends Controller
         
         $charge_old = $charge->charge;
         $user_id = $charge->user_id;
+        $request->charge = base64_decode($request->charge);
         
         $userCharges = Task::when($and, function($q) use($user_id,$charge_old){
             $q->where('user_id', $user_id)

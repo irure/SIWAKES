@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="panel toppanel" style="padding:5px;">
-                    <router-link to="/" tag="button"class="button" @click.native="setPartFalse"><<1回目に戻る</router-link>
+                    <button tag="button"class="button" v-on:click="setPartFalse"><<1回目に戻る</button>
                 </div>
                 <div class="panel toppanel">
                     <router-link to="/Tasks2" tag="button"class="button">タスク一覧</router-link>

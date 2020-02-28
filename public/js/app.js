@@ -2185,12 +2185,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return v.id === id;
         })[0].charge
       };
-      this.$store.dispatch('auth/updateChargeList', {
-        charge_id: id,
-        charge: data.charge
-      }).then(function () {
-        _this2.getChargeList();
-      });
+
+      if (data.charge) {
+        this.$store.dispatch('auth/updateChargeList', {
+          charge_id: id,
+          charge: data.charge
+        }).then(function () {
+          _this2.getChargeList();
+        });
+      }
     },
     getPart: function () {
       var _getPart = _asyncToGenerator(
@@ -2932,12 +2935,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return v.id === id;
         })[0].task
       };
-      this.$store.dispatch('auth/updateTask', {
-        id: id,
-        task: data.task
-      }).then(function () {
-        _this4.getTaskList();
-      });
+
+      if (data.task) {
+        this.$store.dispatch('auth/updateTask', {
+          id: id,
+          task: data.task
+        }).then(function () {
+          _this4.getTaskList();
+        });
+      }
     },
     updateHowlong: function updateHowlong(id) {
       var _this5 = this;
@@ -2947,12 +2953,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return v.id === id;
         })[0].howlong
       };
-      this.$store.dispatch('auth/updateHowlong', {
-        id: id,
-        howlong: data.howlong
-      }).then(function () {
-        _this5.getTaskList();
-      });
+
+      if (!isNaN(data.howlong)) {
+        this.$store.dispatch('auth/updateHowlong', {
+          id: id,
+          howlong: data.howlong
+        }).then(function () {
+          _this5.getTaskList();
+        });
+      }
     },
     updateHowtimes: function updateHowtimes(id) {
       var _this6 = this;
@@ -3089,6 +3098,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3104,6 +3114,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   computed: {
     partStatus: function partStatus() {
       return this.$store.state.auth.part;
+    },
+    isLarge: function isLarge() {
+      if (window.matchMedia('(min-width: 600px)').matches) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   methods: {
@@ -60314,7 +60331,7 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     staticStyle: { width: "7em" },
-                    attrs: { type: "text", id: "charge" },
+                    attrs: { type: "text", id: "charge", required: "" },
                     domProps: { value: charge.charge },
                     on: {
                       blur: function($event) {
@@ -60615,20 +60632,15 @@ var render = function() {
           { staticClass: "panel toppanel", staticStyle: { padding: "5px" } },
           [
             _c(
-              "router-link",
+              "button",
               {
                 staticClass: "button",
-                attrs: { to: "/", tag: "button" },
-                nativeOn: {
-                  click: function($event) {
-                    return _vm.setPartFalse($event)
-                  }
-                }
+                attrs: { tag: "button" },
+                on: { click: _vm.setPartFalse }
               },
               [_vm._v("<<1回目に戻る")]
             )
-          ],
-          1
+          ]
         ),
         _vm._v(" "),
         _c(
@@ -61040,7 +61052,7 @@ var render = function() {
                       ],
                       staticClass: "form-control",
                       staticStyle: { width: "8em" },
-                      attrs: { type: "text", id: "task" },
+                      attrs: { type: "text", id: "task", required: "" },
                       domProps: { value: task.task },
                       on: {
                         blur: function($event) {
@@ -61068,7 +61080,12 @@ var render = function() {
                       ],
                       staticClass: "form-control",
                       staticStyle: { width: "4em" },
-                      attrs: { type: "howlong", id: "howlong" },
+                      attrs: {
+                        type: "howlong",
+                        id: "howlong",
+                        pattern: "[0-9]+",
+                        required: ""
+                      },
                       domProps: { value: task.howlong },
                       on: {
                         blur: function($event) {
@@ -61281,20 +61298,15 @@ var render = function() {
           { staticClass: "panel toppanel", staticStyle: { padding: "5px" } },
           [
             _c(
-              "router-link",
+              "button",
               {
                 staticClass: "button",
-                attrs: { to: "/", tag: "button" },
-                nativeOn: {
-                  click: function($event) {
-                    return _vm.setPartFalse($event)
-                  }
-                }
+                attrs: { tag: "button" },
+                on: { click: _vm.setPartFalse }
               },
               [_vm._v("<<1回目に戻る")]
             )
-          ],
-          1
+          ]
         ),
         _vm._v(" "),
         _c(
@@ -61327,15 +61339,35 @@ var render = function() {
             "table",
             { staticClass: "table-striped", attrs: { align: "center" } },
             [
-              _vm._m(0),
+              _c("tr", [
+                _c("td", [_vm._v("タスク名")]),
+                _vm.isLarge === true ? _c("td", [_vm._v("1回/分")]) : _vm._e(),
+                _vm.isLarge === true
+                  ? _c("td", [_vm._v("1週間/回")])
+                  : _vm._e(),
+                _vm.isLarge === false ? _c("td", [_vm._v("時間")]) : _vm._e(),
+                _c("td", [_vm._v("担当者")]),
+                _c("td"),
+                _c("td", [_vm._v("担当2")])
+              ]),
               _vm._v(" "),
               _vm._l(_vm.tasks, function(task) {
                 return _c("tr", { staticClass: "card" }, [
                   _c("td", [_vm._v(_vm._s(task.task))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(task.howlong) + "分")]),
+                  _vm.isLarge === true
+                    ? _c("td", [_vm._v(_vm._s(task.howlong) + "分")])
+                    : _vm._e(),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(task.howtimes) + "回")]),
+                  _vm.isLarge === true
+                    ? _c("td", [_vm._v(_vm._s(task.howtimes) + "回")])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.isLarge === false
+                    ? _c("td", [
+                        _vm._v(_vm._s(task.howlong * task.howtimes) + "分")
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(task.charge))]),
                   _vm._v(" "),
@@ -61399,21 +61431,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [_vm._v("タスク名")]),
-      _c("td", [_vm._v("1回/分")]),
-      _c("td", [_vm._v("1週間/回")]),
-      _c("td", [_vm._v("担当者")]),
-      _c("td"),
-      _c("td", [_vm._v("担当2")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -78959,27 +78977,28 @@ var actions = {
           switch (_context4.prev = _context4.next) {
             case 0:
               context.commit('setApiStatus', null);
-              _context4.next = 3;
+              $data.task = encodeURI($data.task);
+              _context4.next = 4;
               return axios.post('/api/task', $data);
 
-            case 3:
+            case 4:
               response = _context4.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context4.next = 7;
+                _context4.next = 8;
                 break;
               }
 
               context.commit('setApiStatus', true);
               return _context4.abrupt("return", false);
 
-            case 7:
+            case 8:
               context.commit('setApiStatus', false);
               context.commit('error/setCode', response.status, {
                 root: true
               }); //タスク一覧をデータベースから取得
 
-            case 9:
+            case 10:
             case "end":
               return _context4.stop();
           }
@@ -79091,28 +79110,33 @@ var actions = {
           switch (_context7.prev = _context7.next) {
             case 0:
               context.commit('setApiStatus', null);
+              _context7.next = 3;
+              return base64Encode(data.task);
+
+            case 3:
+              data.task = _context7.sent;
               console.log(data);
-              _context7.next = 4;
+              _context7.next = 7;
               return axios.put('/api/task/' + data.id + '/task/' + data.task);
 
-            case 4:
+            case 7:
               response = _context7.sent;
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context7.next = 8;
+                _context7.next = 11;
                 break;
               }
 
               context.commit('setApiStatus', true);
               return _context7.abrupt("return", response.data);
 
-            case 8:
+            case 11:
               context.commit('setApiStatus', false);
               context.commit('error/setCode', response.status, {
                 root: true
               }); //時間を更新
 
-            case 10:
+            case 13:
             case "end":
               return _context7.stop();
           }
@@ -79366,29 +79390,34 @@ var actions = {
           switch (_context13.prev = _context13.next) {
             case 0:
               context.commit('setApiStatus', null);
+              _context13.next = 3;
+              return base64Encode(data.charge);
+
+            case 3:
+              data.charge = _context13.sent;
               console.log(data);
-              _context13.next = 4;
+              _context13.next = 7;
               return axios.put('/api/charge/' + data.charge_id + '/' + data.charge);
 
-            case 4:
+            case 7:
               response = _context13.sent;
               console.log(response.data);
 
               if (!(response.status === _util__WEBPACK_IMPORTED_MODULE_1__["OK"])) {
-                _context13.next = 9;
+                _context13.next = 12;
                 break;
               }
 
               context.commit('setApiStatus', true);
               return _context13.abrupt("return", response.data);
 
-            case 9:
+            case 12:
               context.commit('setApiStatus', false);
               context.commit('error/setCode', response.status, {
                 root: true
               });
 
-            case 11:
+            case 14:
             case "end":
               return _context13.stop();
           }
@@ -79954,6 +79983,23 @@ var actions = {
   mutations: mutations,
   actions: actions
 });
+
+function base64Encode() {
+  for (var _len = arguments.length, parts = new Array(_len), _key = 0; _key < _len; _key++) {
+    parts[_key] = arguments[_key];
+  }
+
+  return new Promise(function (resolve) {
+    var reader = new FileReader();
+
+    reader.onload = function () {
+      var offset = reader.result.indexOf(",") + 1;
+      resolve(reader.result.slice(offset));
+    };
+
+    reader.readAsDataURL(new Blob(parts));
+  });
+}
 
 /***/ }),
 

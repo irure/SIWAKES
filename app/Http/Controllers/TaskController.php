@@ -15,7 +15,7 @@ class TaskController extends Controller
     
     public function post(Request $request){
         $task = new Task();
-        $task->task = $request->task;
+        $task->task = urldecode($request->task);
         $task->howtimes = 1;
         $task->howlong = 30;
         $task->charge = '気づいた方';
@@ -31,7 +31,7 @@ class TaskController extends Controller
     
     public function taskUpdate(Request $request,$id){
         $task = Task::find($id);
-        $task->task = $request->task;
+        $task->task = base64_decode($request->task);
         $task->save();
         return response("OK", 200);
     }

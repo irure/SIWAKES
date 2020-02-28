@@ -13,8 +13,8 @@
                             <td>タスク名</td><td>1回/分</td><td>1週間/回</td><td>担当</td>
                         </tr>
                         <tr class="card" v-for="task in tasks">
-                            <td><input type="text" class="form-control" id="task" v-model="task.task" @blur="updateTask(task.id)"style="width:8em;"></td>
-                            <td><input type="howlong" class="form-control" id="howlong" v-model="task.howlong" @blur="updateHowlong(task.id)" style="width:4em;">分</td>
+                            <td><input type="text" class="form-control" id="task" v-model="task.task" @blur="updateTask(task.id)"style="width:8em;" required></td>
+                            <td><input type="howlong" class="form-control" id="howlong" v-model="task.howlong" @blur="updateHowlong(task.id)" style="width:4em;"pattern="[0-9]+" required>分</td>
                             <td><select class="form-control" v-model="task.howtimes" @blur="updateHowtimes(task.id)">
                                 <option v-for="time in times">
                                     {{ time }}
@@ -74,15 +74,18 @@
             },
             updateTask(id){
                 let data = {task:this.tasks.filter((v)=>{return v.id === id})[0].task}
-                this.$store.dispatch('auth/updateTask',{id:id,task:data.task}).then(()=>{
+                if(data.task) {
+                    this.$store.dispatch('auth/updateTask',{id:id,task:data.task}).then(()=>{
                     this.getTaskList()
-                })
+                })}
             },
             updateHowlong(id){
                 let data = {howlong:this.tasks.filter((v)=>{return v.id === id})[0].howlong}
+                if(!isNaN(data.howlong)){
                 this.$store.dispatch('auth/updateHowlong',{id:id,howlong:data.howlong}).then(()=>{
                     this.getTaskList()
                 })
+                }
             },
             updateHowtimes(id){
                 let data = {howtimes:this.tasks.filter((v)=>{return v.id === id})[0].howtimes}

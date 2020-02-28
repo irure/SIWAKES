@@ -81,4 +81,11 @@ table{
 }
 }
 
+input:invalid {
+  border: 2px dashed red;
+}
+
+input:invalid:required {
+  background-color: orangered;
+}
 </style>

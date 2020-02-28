@@ -90,6 +90,7 @@ const actions = {
     //タスクをデータベースに保存
   },async postTask(context,$data){
     context.commit('setApiStatus', null)
+    $data.task=encodeURI($data.task)
     const response = await axios.post('/api/task',$data);
     
     if (response.status === OK) {
@@ -129,6 +130,7 @@ const actions = {
     //タスクを更新
   },async updateTask(context,data){
     context.commit('setApiStatus', null)
+    data.task=await base64Encode(data.task)
     console.log(data)
     const response = await axios.put('/api/task/'+data.id+'/task/'+data.task)
     
@@ -218,6 +220,7 @@ const actions = {
   //担当一覧の担当を更新
   async updateChargeList(context,data){
     context.commit('setApiStatus', null)
+    data.charge=await base64Encode(data.charge)
     console.log(data)
     const response = await axios.put('/api/charge/'+data.charge_id+'/'+data.charge)
     console.log(response.data)
@@ -410,4 +413,15 @@ export default {
   getters,
   mutations,
   actions
+}
+
+function base64Encode(...parts) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const offset = reader.result.indexOf(",") + 1;
+      resolve(reader.result.slice(offset));
+    };
+    reader.readAsDataURL(new Blob(parts));
+  });
 }
