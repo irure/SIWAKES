@@ -10,7 +10,7 @@
                 <div class="panel">
                     <div class="card" v-for="charge in charges">
                         <div class="card-header">
-                            担当{{charge.charge_id}}:<input type="text" class="form-control" id="charge" v-model="charge.charge" @blur="updateChargeList(charge.id)" style="width:7em;" required>
+                            担当{{charge.charge_id}}:<input type="text" class="form-control" id="charge" v-model="charge.charge" @blur="updateChargeList(charge.id)" style="width:6rem;" required>
                         </div>
                     </div>
                     ※担当１は<label class="fuchidori" style="color:lightskyblue;">青</label>、２は<label class="fuchidori" style="color:gainsboro;">灰色</label>、３は<label class="fuchidori" style="color:lightpink;">ピンク色</label>でグラフに描画されます

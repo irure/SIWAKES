@@ -32,6 +32,9 @@
                             </tr>
                         </table>
                     </div>
+                    <div style="text-align:center;">
+                        <br><iframe src="https://rcm-fe.amazon-adsystem.com/e/cm?o=9&p=294&l=ur1&category=timesalefestival202003&banner=0Q7ATCJ8J2W9162WXF82&f=ifr&linkID=9d119dad6e18e5b39577ee3474cc504c&t=siwakes-22&tracking_id=siwakes-22" width="320" height="100" scrolling="no" border="0" marginwidth="0" style="border:none;" frameborder="0"></iframe>
+                    </div>
                 </div>
             </div>
         </div>

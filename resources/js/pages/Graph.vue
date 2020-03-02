@@ -26,14 +26,20 @@
                             </div>
                             <div class="form-group">
                                 <input class="form-control" type="file" accept="image/*" @change="onFileChange"><br>
-                                <input class="form-control" type="file" accept="image/*" @change="onFileChange2"><br>
                                 <label>ダウンロードしたグラフなどを追加できます</label><br>
                                 <div class="text-danger" v-if="errors.image" v-text="errors.image"></div>
                             </div>
-                        <p><button v-on:click="finishGraph" style="float:left;">ツイートせず1回目の仕分けを完了</button></p>
-                        <p><button v-on:click="postTwitter" style="float:right; text-align:center;"class="tweet">ツイートして1回目の仕分けを完了</button></p>
+                            <p><button v-on:click="finishGraph" style="float:left;">ツイートせず1回目の仕分けを完了</button></p>
+                            <p><button v-on:click="postTwitter" style="float:right; text-align:center;"class="tweet">ツイートして1回目の仕分けを完了</button></p>
+                        </div>
                     </div>
                 </div>
+                <div style="text-align:center">
+                    <br><a href="https://px.a8.net/svt/ejp?a8mat=3B96L1+G9UKT6+2GMK+ZRIB6" rel="nofollow">1冊80円のDMMコミックレンタル！</a>
+                    <img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=3B96L1+G9UKT6+2GMK+ZRIB6" alt=""><br>
+                    <a href="https://px.a8.net/svt/ejp?a8mat=3B96L1+G9UKT6+2GMK+ZT0BL" rel="nofollow">
+                    <img border="0" width="468" height="60" alt="" src="https://www27.a8.net/svt/bgt?aid=200302741984&wid=002&eno=01&mid=s00000011486006014000&mc=1"></a>
+                    <img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=3B96L1+G9UKT6+2GMK+ZT0BL" alt="">
                 </div>
             </div>
         </div>

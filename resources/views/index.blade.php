@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ config('app.name') }}</title>
+  <title>SIWAKES</title>
 
   <!-- Scripts -->
   <script src="{{ mix('js/app.js') }}" defer></script>
@@ -19,7 +19,19 @@
   <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.4/dist/vuelidate.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vuelidate@0.7.4/dist/validators.min.js"></script>
   <script src="https://unpkg.com/vue-star-rating/dist/star-rating.min.js"></script>
+  <script data-ad-client="ca-pub-6572321686186663" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-159439389-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'UA-159439389-1');
+  </script>
+
+  <meta name="description" content="SIWAKESは、夫婦のタスクを仕分けしあなたのシワを消すWebアプリです！">
 </head>
 <body>
   <div id="app"></div>

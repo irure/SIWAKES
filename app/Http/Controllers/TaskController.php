@@ -90,14 +90,14 @@ class TaskController extends Controller
     
     public function getText(){
         $user = Auth::user();
-        $text = '仕分けを完了しました！満足度は'.str_repeat('★',$user->rating).str_repeat('☆',5-$user->rating).'でした！(link:SIWAKES)';
+        $text = '仕分けを完了しました！満足度は'.str_repeat('★',$user->rating).str_repeat('☆',5-$user->rating).'でした！https://siwakes.site';
         return $text;
     }
     
     public function getText2(){
         $user = Auth::user();
         $text = '2回目の仕分けを完了しました！満足度は'.str_repeat('★',$user->rating).str_repeat('☆',5-$user->rating).'から'.
-        str_repeat('★',$user->rating2).str_repeat('☆',5-$user->rating2).'になりました！(link:SIWAKES)';
+        str_repeat('★',$user->rating2).str_repeat('☆',5-$user->rating2).'になりました！https://siwakes.site';
         return $text;
     }
     

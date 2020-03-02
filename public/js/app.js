@@ -2033,6 +2033,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
@@ -2260,6 +2270,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2819,6 +2835,9 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
 //
 //
 //
@@ -60303,7 +60322,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
-                    staticStyle: { width: "7em" },
+                    staticStyle: { width: "6rem" },
                     attrs: { type: "text", id: "charge", required: "" },
                     domProps: { value: charge.charge },
                     on: {
@@ -60525,13 +60544,6 @@ var render = function() {
                   }),
                   _c("br"),
                   _vm._v(" "),
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: { type: "file", accept: "image/*" },
-                    on: { change: _vm.onFileChange2 }
-                  }),
-                  _c("br"),
-                  _vm._v(" "),
                   _c("label", [
                     _vm._v("ダウンロードしたグラフなどを追加できます")
                   ]),
@@ -60570,12 +60582,76 @@ var render = function() {
               ])
             ]
           )
-        ])
+        ]),
+        _vm._v(" "),
+        _vm._m(0)
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticStyle: { "text-align": "center" } }, [
+      _c("br"),
+      _c(
+        "a",
+        {
+          attrs: {
+            href: "https://px.a8.net/svt/ejp?a8mat=3B96L1+G9UKT6+2GMK+ZRIB6",
+            rel: "nofollow"
+          }
+        },
+        [_vm._v("1冊80円のDMMコミックレンタル！")]
+      ),
+      _vm._v(" "),
+      _c("img", {
+        attrs: {
+          border: "0",
+          width: "1",
+          height: "1",
+          src: "https://www11.a8.net/0.gif?a8mat=3B96L1+G9UKT6+2GMK+ZRIB6",
+          alt: ""
+        }
+      }),
+      _c("br"),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          attrs: {
+            href: "https://px.a8.net/svt/ejp?a8mat=3B96L1+G9UKT6+2GMK+ZT0BL",
+            rel: "nofollow"
+          }
+        },
+        [
+          _c("img", {
+            attrs: {
+              border: "0",
+              width: "468",
+              height: "60",
+              alt: "",
+              src:
+                "https://www27.a8.net/svt/bgt?aid=200302741984&wid=002&eno=01&mid=s00000011486006014000&mc=1"
+            }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _c("img", {
+        attrs: {
+          border: "0",
+          width: "1",
+          height: "1",
+          src: "https://www18.a8.net/0.gif?a8mat=3B96L1+G9UKT6+2GMK+ZT0BL",
+          alt: ""
+        }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -61224,7 +61300,9 @@ var render = function() {
             ],
             2
           )
-        ])
+        ]),
+        _vm._v(" "),
+        _vm._m(1)
       ])
     ])
   ])
@@ -61239,6 +61317,27 @@ var staticRenderFns = [
       _c("td", [_vm._v("1回/分")]),
       _c("td", [_vm._v("1週間/回")]),
       _c("td", [_vm._v("担当")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticStyle: { "text-align": "center" } }, [
+      _c("br"),
+      _c("iframe", {
+        staticStyle: { border: "none" },
+        attrs: {
+          src:
+            "https://rcm-fe.amazon-adsystem.com/e/cm?o=9&p=294&l=ur1&category=timesalefestival202003&banner=0Q7ATCJ8J2W9162WXF82&f=ifr&linkID=9d119dad6e18e5b39577ee3474cc504c&t=siwakes-22&tracking_id=siwakes-22",
+          width: "320",
+          height: "100",
+          scrolling: "no",
+          border: "0",
+          marginwidth: "0",
+          frameborder: "0"
+        }
+      })
     ])
   }
 ]
